@@ -1,0 +1,15 @@
+/Users/Vinh.Vu/Desktop/kata/vinh-foundational/fizzbuzz/bin/Debug/net6.0/fizzbuzz
+/Users/Vinh.Vu/Desktop/kata/vinh-foundational/fizzbuzz/bin/Debug/net6.0/fizzbuzz.deps.json
+/Users/Vinh.Vu/Desktop/kata/vinh-foundational/fizzbuzz/bin/Debug/net6.0/fizzbuzz.runtimeconfig.json
+/Users/Vinh.Vu/Desktop/kata/vinh-foundational/fizzbuzz/bin/Debug/net6.0/fizzbuzz.dll
+/Users/Vinh.Vu/Desktop/kata/vinh-foundational/fizzbuzz/bin/Debug/net6.0/fizzbuzz.pdb
+/Users/Vinh.Vu/Desktop/kata/vinh-foundational/fizzbuzz/obj/Debug/net6.0/fizzbuzz.csproj.AssemblyReference.cache
+/Users/Vinh.Vu/Desktop/kata/vinh-foundational/fizzbuzz/obj/Debug/net6.0/fizzbuzz.GeneratedMSBuildEditorConfig.editorconfig
+/Users/Vinh.Vu/Desktop/kata/vinh-foundational/fizzbuzz/obj/Debug/net6.0/fizzbuzz.AssemblyInfoInputs.cache
+/Users/Vinh.Vu/Desktop/kata/vinh-foundational/fizzbuzz/obj/Debug/net6.0/fizzbuzz.AssemblyInfo.cs
+/Users/Vinh.Vu/Desktop/kata/vinh-foundational/fizzbuzz/obj/Debug/net6.0/fizzbuzz.csproj.CoreCompileInputs.cache
+/Users/Vinh.Vu/Desktop/kata/vinh-foundational/fizzbuzz/obj/Debug/net6.0/fizzbuzz.dll
+/Users/Vinh.Vu/Desktop/kata/vinh-foundational/fizzbuzz/obj/Debug/net6.0/refint/fizzbuzz.dll
+/Users/Vinh.Vu/Desktop/kata/vinh-foundational/fizzbuzz/obj/Debug/net6.0/fizzbuzz.pdb
+/Users/Vinh.Vu/Desktop/kata/vinh-foundational/fizzbuzz/obj/Debug/net6.0/fizzbuzz.genruntimeconfig.cache
+/Users/Vinh.Vu/Desktop/kata/vinh-foundational/fizzbuzz/obj/Debug/net6.0/ref/fizzbuzz.dll
