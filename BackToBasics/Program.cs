@@ -7,7 +7,7 @@ namespace Foundation
         public static void Main(string[] args)
         {
             Menu menu = new Menu();
-            Console.WriteLine("Welcome to Vinh's Foundational katas");
+            Console.WriteLine("Welcome to Vinh's foundational katas");
             MenuOption userSelection;
             do
             {
@@ -26,6 +26,7 @@ namespace Foundation
                     break;
 
                     case MenuOption.SumOrProduct:
+                    var sumOrProduct = new SumOrProduct();
                     userSelection = menu.PrintFinishMessage();
                     break;
                     
