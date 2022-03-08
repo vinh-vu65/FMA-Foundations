@@ -33,7 +33,7 @@ namespace Foundation
             {
                 sum += i;
             }
-            Console.WriteLine($"The sum of all numbers from 1 to {num} is: {sum}");
+            Console.WriteLine($"\n The sum of all numbers from 1 to {num} is: {sum}");
         }
         
     }

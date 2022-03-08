@@ -38,7 +38,7 @@ namespace Foundation
                 if ( i % 3 == 0 && i % 5 == 0 )
                     sum += i;
             }
-            Console.WriteLine($"The sum of all numbers divisible by 3 or 5, from 1 to {num} is: {sum}");
+            Console.WriteLine($"\n The sum of all numbers divisible by 3 or 5, from 1 to {num} is: {sum}");
         }
     }
 }

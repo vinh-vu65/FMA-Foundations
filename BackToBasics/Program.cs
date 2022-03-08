@@ -6,71 +6,52 @@ namespace Foundation
     {
         public static void Main(string[] args)
         {
+            Menu menu = new Menu();
             Console.WriteLine("Welcome to Vinh's Foundational katas");
             MenuOption userSelection;
             do
             {
-                userSelection = ReadMenuOption();
+                menu.PrintOptions();
+                userSelection = menu.ReadMenuOption();
                 switch (userSelection)
                 {
                     case MenuOption.SumFinder:
                     var sumFinder = new SumFinder();
+                    userSelection = menu.PrintFinishMessage();
                     break;
+
                     case MenuOption.ThreeFiveSum:
                     var threeFiveSum = new ThreeFiveSum();
+                    userSelection = menu.PrintFinishMessage();
                     break;
+
                     case MenuOption.SumOrProduct:
+                    userSelection = menu.PrintFinishMessage();
                     break;
+                    
                     case MenuOption.MultiplicationTable:
+                    userSelection = menu.PrintFinishMessage();
                     break;
+
                     case MenuOption.GuessingGame:
+                    userSelection = menu.PrintFinishMessage();
                     break;
+
                     case MenuOption.LeapYear:
+                    userSelection = menu.PrintFinishMessage();
                     break;
+
                     case MenuOption.FizzBuzz:
                     var fizzBuzz = new FizzBuzz();
+                    userSelection = menu.PrintFinishMessage();
                     break;
                 }
             } while (userSelection != MenuOption.Quit); 
         }
 
-        public static MenuOption ReadMenuOption()
-        {
-            int option;
-            bool tryParse;
-            Console.WriteLine("\n Please choose a program to run!");
-            Console.WriteLine("1. Sum Finder");
-            Console.WriteLine("2. Three Five Sum");
-            Console.WriteLine("3. Sum Or Product");
-            Console.WriteLine("4. Multiplication Table");
-            Console.WriteLine("5. Guessing Game");
-            Console.WriteLine("6. Leap Year");
-            Console.WriteLine("7. FizzBuzz");
-            
-            do 
-            {
-                Console.Write("Enter a number from 1 - 7 to make your choice or enter 0 to quit:");
-                tryParse = Int32.TryParse(Console.ReadLine(), out option);
-            } while ((option < 0 || option > 7) || (!tryParse));
-            return (MenuOption)(option);
-        }
-    }
-    public enum MenuOption 
-    {
-        Quit,
-        SumFinder,
-        ThreeFiveSum,
-        SumOrProduct,
-        MultiplicationTable,
-        GuessingGame,
-        LeapYear,
-        FizzBuzz
+        
     }
 }
-
-
-
-
 
 /*
 TASKS:
