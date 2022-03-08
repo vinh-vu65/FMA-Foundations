@@ -16,11 +16,6 @@ namespace Foundation
     }
     public class Menu
     {
-        
-        public Menu()
-        {
-
-        }
         public void PrintOptions()
         {
             Console.WriteLine("\n Please choose a program to run!");

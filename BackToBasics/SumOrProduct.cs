@@ -12,15 +12,10 @@ namespace Foundation
             input = HandleInput();
             Console.WriteLine($"You have chosen {input}.");
             userChoseSum = ChooseSumOrProduct();
-            if (userChoseSum == true)
-            {
+            if (userChoseSum)
                 FindSum(input);
-            }
             else
-            {
-                FindProduct(input);
-            } 
-                
+                FindProduct(input); 
         }
         public void InitialPrintMessage()
         {
