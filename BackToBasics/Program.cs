@@ -16,6 +16,19 @@ namespace Foundation
                     case MenuOption.SumFinder:
                     var sumFinder = new SumFinder();
                     break;
+                    case MenuOption.ThreeFiveSum:
+                    break;
+                    case MenuOption.SumOrProduct:
+                    break;
+                    case MenuOption.MultiplicationTable:
+                    break;
+                    case MenuOption.GuessingGame:
+                    break;
+                    case MenuOption.LeapYear:
+                    break;
+                    case MenuOption.FizzBuzz:
+                    var fizzBuzz = new FizzBuzz();
+                    break;
                 }
             } while (userSelection != MenuOption.Quit); 
         }
@@ -23,6 +36,7 @@ namespace Foundation
         public static MenuOption ReadMenuOption()
         {
             int option;
+            bool tryParse;
             Console.WriteLine("\n Please choose a program to run!");
             Console.WriteLine("1. Sum Finder");
             Console.WriteLine("2. Three Five Sum");
@@ -30,13 +44,13 @@ namespace Foundation
             Console.WriteLine("4. Multiplication Table");
             Console.WriteLine("5. Guessing Game");
             Console.WriteLine("6. Leap Year");
+            Console.WriteLine("7. FizzBuzz");
             
             do 
             {
-                Console.Write("Enter a number from 1 - 6 to make your choice or enter 0 to quit:");
-                Int32.TryParse(Console.ReadLine(), out option);
-            } while (option < 0 || option > 6);
-            
+                Console.Write("Enter a number from 1 - 7 to make your choice or enter 0 to quit:");
+                tryParse = Int32.TryParse(Console.ReadLine(), out option);
+            } while ((option < 0 || option > 7) || (!tryParse));
             return (MenuOption)(option);
         }
     }
@@ -48,7 +62,8 @@ namespace Foundation
         SumOrProduct,
         MultiplicationTable,
         GuessingGame,
-        LeapYear
+        LeapYear,
+        FizzBuzz
     }
 }
 
