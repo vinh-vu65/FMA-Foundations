@@ -46,8 +46,7 @@ namespace Foundation
         public MenuOption PrintFinishMessage()
         {
             Console.WriteLine("\n Would you like to try another program?");
-            Console.Write("Enter Q to quit, or any other key to continue: ");
-            Console.ReadKey();
+            Console.Write("Press Q to quit, or any other key to continue: ");
             if (Console.ReadKey().Key == ConsoleKey.Q)
             {
                 return MenuOption.Quit;
