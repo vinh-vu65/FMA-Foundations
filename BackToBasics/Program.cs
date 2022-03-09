@@ -8,8 +8,8 @@ namespace Foundation
         {
             Menu menu = new Menu();
             Console.WriteLine("Welcome to Vinh's foundational katas");
-            MenuOption userSelection;
-            do
+            MenuOption userSelection = MenuOption.Continue;
+            while (userSelection != MenuOption.Quit) 
             {
                 menu.PrintOptions();
                 userSelection = menu.ReadMenuOption();
@@ -40,9 +40,14 @@ namespace Foundation
                     case MenuOption.FizzBuzz:
                     var fizzBuzz = new FizzBuzz();
                     break;
+
+                    case MenuOption.Quit:
+                    Console.WriteLine("You have chosen to quit");
+                    userSelection = MenuOption.Quit;
+                    break;
                 }
                 userSelection = menu.PrintFinishMessage();
-            } while (userSelection != MenuOption.Quit); 
+            } 
         }
     }
 }
