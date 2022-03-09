@@ -19,7 +19,7 @@ namespace Foundation
         }
         public void InitialPrintMessage()
         {
-            Console.WriteLine("\n You have chosen to run the Sum Or Product");
+            Console.WriteLine("\n You have chosen to run Sum Or Product");
             Console.WriteLine("Please enter a positive number (n)");
             Console.WriteLine("The program will then ask if you want to sum or product");
             Console.WriteLine("Sum: The program will find the sum of all numbers from 1 to n.");
