@@ -17,40 +17,33 @@ namespace Foundation
                 {
                     case MenuOption.SumFinder:
                     var sumFinder = new SumFinder();
-                    userSelection = menu.PrintFinishMessage();
                     break;
 
                     case MenuOption.ThreeFiveSum:
                     var threeFiveSum = new ThreeFiveSum();
-                    userSelection = menu.PrintFinishMessage();
                     break;
 
                     case MenuOption.SumOrProduct:
                     var sumOrProduct = new SumOrProduct();
-                    userSelection = menu.PrintFinishMessage();
                     break;
                     
                     case MenuOption.MultiplicationTable:
-                    userSelection = menu.PrintFinishMessage();
+                    var multiplicationTable = new MultiplicationTable();
                     break;
 
                     case MenuOption.GuessingGame:
-                    userSelection = menu.PrintFinishMessage();
                     break;
 
                     case MenuOption.LeapYear:
-                    userSelection = menu.PrintFinishMessage();
                     break;
 
                     case MenuOption.FizzBuzz:
                     var fizzBuzz = new FizzBuzz();
-                    userSelection = menu.PrintFinishMessage();
                     break;
                 }
+                userSelection = menu.PrintFinishMessage();
             } while (userSelection != MenuOption.Quit); 
         }
-
-        
     }
 }
 
