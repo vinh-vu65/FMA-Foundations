@@ -6,6 +6,10 @@ namespace Foundation
     {
         public SumOrProduct()
         {
+             
+        }
+        public void Execute()
+        {
             int input;
             bool userChoseSum;
             InitialPrintMessage();
@@ -15,7 +19,7 @@ namespace Foundation
             if (userChoseSum)
                 FindSum(input);
             else
-                FindProduct(input); 
+                FindProduct(input);
         }
         public void InitialPrintMessage()
         {

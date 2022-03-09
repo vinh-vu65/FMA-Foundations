@@ -6,6 +6,10 @@ namespace Foundation
     {
         public GuessingGame()
         {
+            
+        }
+        public void Execute()
+        {
             PrintInitialMessage();
             int input = HandleInput();
             RunGuessingGame(input);

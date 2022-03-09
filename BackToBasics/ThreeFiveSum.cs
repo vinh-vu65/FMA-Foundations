@@ -6,11 +6,14 @@ namespace Foundation
     {
         public ThreeFiveSum()
         {
+            
+        }
+        public void Execute()
+        {
             InitialPrintMessage();
             int input = HandleInput();
             FindThreeFiveSum(input);
         }
-        
         public void InitialPrintMessage()
         {
             Console.WriteLine("\n You have chosen to run Three Five Sum");

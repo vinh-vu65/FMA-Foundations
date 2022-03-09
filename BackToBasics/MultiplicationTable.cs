@@ -8,6 +8,11 @@ namespace Foundation
         public const int MaxMultiplication = 12;
         public MultiplicationTable()
         {
+            
+        }
+        public void Execute()
+        {
+            PrintInitialMessage();
             int userInput = HandleInput();
             for (int i = 1 ; i <= userInput ; i += 6)
             {

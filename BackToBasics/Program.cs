@@ -21,22 +21,27 @@ public class Program
 
                 case MenuOption.ThreeFiveSum:
                     var threeFiveSum = new ThreeFiveSum();
+                    threeFiveSum.Execute();
                     break;
 
                 case MenuOption.SumOrProduct:
                     var sumOrProduct = new SumOrProduct();
+                    sumOrProduct.Execute();
                     break;
 
                 case MenuOption.MultiplicationTable:
                     var multiplicationTable = new MultiplicationTable();
+                    multiplicationTable.Execute();
                     break;
 
                 case MenuOption.GuessingGame:
                     var guessingGame = new GuessingGame();
+                    guessingGame.Execute();
                     break;
 
                 case MenuOption.FizzBuzz:
                     var fizzBuzz = new FizzBuzz();
+                    fizzBuzz.Execute();
                     break;
 
                 case MenuOption.Quit:
@@ -48,3 +53,7 @@ public class Program
         }
     }
 }
+
+//Refactor code so methods are not in constructor
+//Add fields and properties
+//inheritance / interface

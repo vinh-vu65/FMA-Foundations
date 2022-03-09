@@ -6,6 +6,10 @@ namespace Foundation
     {
         public FizzBuzz()
         {
+            
+        }
+        public void Execute()
+        {
             InitialPrintMessage();
             int input = HandleInput();
             PrintFizzBuzz(input);
