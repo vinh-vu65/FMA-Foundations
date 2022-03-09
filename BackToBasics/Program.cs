@@ -44,7 +44,7 @@ public class Program
                     userSelection = MenuOption.Quit;
                     return;
             }
-            //userSelection = menu.PrintFinishMessage();
+            userSelection = menu.PrintFinishMessage();
         }
     }
 }
