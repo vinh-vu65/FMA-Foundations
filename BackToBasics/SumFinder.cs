@@ -6,11 +6,14 @@ namespace Foundation
     {
         public SumFinder()
         {
+            
+        }
+        public void Execute()
+        {
             InitialPrintMessage();
             int userInput = HandleInput();
             FindSum(userInput);
         }
-        
         public void InitialPrintMessage()
         {
             Console.WriteLine("\n You have chosen to run the Sum Finder");

@@ -37,18 +37,15 @@ namespace Foundation
             } while (userInput <= 0);
             return userInput;
         }
-        public void PrintMultiplicationTables(int columnStartNumber, int columnEndNumber)
+        public void PrintMultiplicationTables(int columnStart, int columnEnd)
         {
             for ( int i = 1 ; i <= MaxMultiplication ; i++ )
             {
-                for ( int j = columnStartNumber ; j <= columnEndNumber ; j++ )
+                for ( int j = columnStart ; j <= columnEnd ; j++ )
                 {
-                    string multiplicationEquation = $"{j} x {i} = {i * j}";
-                    Console.Write(multiplicationEquation);
-                    for ( int k = multiplicationEquation.Length ; k <= 14 ; k++ )
-                    {
-                        Console.Write(" ");
-                    }
+                    string equation = $"{j} x {i} = {i * j}";
+                    Console.Write(equation + "\t");
+                    //Console.Write(new string(' ', 14- multiplicationEquation.Length));
                 }
                 Console.WriteLine();
             }
