@@ -1,51 +1,50 @@
 ﻿using System;
+namespace Foundation;
 
-namespace Foundation 
+public class Program
 {
-    public class Program 
+    public static void Main(string[] args)
     {
-        public static void Main(string[] args)
+        Menu menu = new Menu();
+        Console.WriteLine("Welcome to Vinh's foundational katas");
+        MenuOption userSelection = MenuOption.Continue;
+        while (userSelection != MenuOption.Quit)
         {
-            Menu menu = new Menu();
-            Console.WriteLine("Welcome to Vinh's foundational katas");
-            MenuOption userSelection = MenuOption.Continue;
-            while (userSelection != MenuOption.Quit) 
+            menu.PrintOptions();
+            userSelection = menu.ReadMenuOption();
+            switch (userSelection)
             {
-                menu.PrintOptions();
-                userSelection = menu.ReadMenuOption();
-                switch (userSelection)
-                {
-                    case MenuOption.SumFinder:
+                case MenuOption.SumFinder:
                     var sumFinder = new SumFinder();
+                    sumFinder.Execute();
                     break;
 
-                    case MenuOption.ThreeFiveSum:
+                case MenuOption.ThreeFiveSum:
                     var threeFiveSum = new ThreeFiveSum();
                     break;
 
-                    case MenuOption.SumOrProduct:
+                case MenuOption.SumOrProduct:
                     var sumOrProduct = new SumOrProduct();
                     break;
-                    
-                    case MenuOption.MultiplicationTable:
+
+                case MenuOption.MultiplicationTable:
                     var multiplicationTable = new MultiplicationTable();
                     break;
 
-                    case MenuOption.GuessingGame:
+                case MenuOption.GuessingGame:
                     var guessingGame = new GuessingGame();
                     break;
 
-                    case MenuOption.FizzBuzz:
+                case MenuOption.FizzBuzz:
                     var fizzBuzz = new FizzBuzz();
                     break;
 
-                    case MenuOption.Quit:
+                case MenuOption.Quit:
                     Console.WriteLine("You have chosen to quit");
                     userSelection = MenuOption.Quit;
-                    break;
-                }
-                userSelection = menu.PrintFinishMessage();
-            } 
+                    return;
+            }
+            userSelection = menu.PrintFinishMessage();
         }
     }
 }
