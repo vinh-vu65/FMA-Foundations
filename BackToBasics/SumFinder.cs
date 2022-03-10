@@ -4,6 +4,7 @@ namespace Foundation
 {
     public class SumFinder
     {
+        public int UserChoice;
         public SumFinder()
         {
             
@@ -11,23 +12,12 @@ namespace Foundation
         public void Execute()
         {
             InitialPrintMessage();
-            int userInput = HandleInput();
-            FindSum(userInput);
+            FindSum(UserChoice);
         }
         public void InitialPrintMessage()
         {
             Console.WriteLine("\n You have chosen to run the Sum Finder");
             Console.WriteLine("Please enter a positive number (n) and the program will calculate the sum of all numbers from 1 to n.");
-        }
-        public int HandleInput()
-        {
-            int userInput;
-            do 
-            {
-                Console.WriteLine("Please enter a number greater than zero: ");
-                Int32.TryParse(Console.ReadLine(), out userInput);
-            } while (userInput <= 0);
-            return userInput;
         }
         public void FindSum (int num)
         {
