@@ -41,6 +41,7 @@ public class Program
 
                 case MenuOption.GuessingGame:
                     var guessingGame = new GuessingGame();
+                    guessingGame.UserChoice = handler.HandleInput();
                     guessingGame.Execute();
                     break;
 
