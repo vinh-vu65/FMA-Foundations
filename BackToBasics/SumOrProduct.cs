@@ -4,22 +4,17 @@ namespace Foundation
 {
     public class SumOrProduct
     {
-        public SumOrProduct()
-        {
-             
-        }
+        public int UserChoice;
+        private bool _userChoseSum;
         public void Execute()
         {
-            int input;
-            bool userChoseSum;
             InitialPrintMessage();
-            input = HandleInput();
-            Console.WriteLine($"You have chosen {input}.");
-            userChoseSum = ChooseSumOrProduct();
-            if (userChoseSum)
-                FindSum(input);
+            Console.WriteLine($"You have chosen {UserChoice}.");
+            ChooseSumOrProduct();
+            if (_userChoseSum)
+                FindSum(UserChoice);
             else
-                FindProduct(input);
+                FindProduct(UserChoice);
         }
         public void InitialPrintMessage()
         {
@@ -29,17 +24,7 @@ namespace Foundation
             Console.WriteLine("Sum: The program will find the sum of all numbers from 1 to n.");
             Console.WriteLine("Product: The program will find the product of all numbers from 1 to n.");
         }
-        public int HandleInput()
-        {
-            int userInput;
-            do 
-            {
-                Console.WriteLine("Please enter a number greater than zero: ");
-                Int32.TryParse(Console.ReadLine(), out userInput);
-            } while (userInput <= 0);
-            return userInput;
-        }
-        public bool ChooseSumOrProduct()
+        public void ChooseSumOrProduct()
         {
             int option;
             Console.WriteLine("Would you like to find the sum or the product?");
@@ -47,11 +32,11 @@ namespace Foundation
             {
             Console.WriteLine("Enter 1 for Sum, Enter 2 for product");
             Int32.TryParse(Console.ReadLine(), out option);
-            } while (option < 1 && option > 3);
+            } while (option < 1 || option > 2);
             if (option == 1)
-                return true;
-            else 
-                return false;
+                _userChoseSum = true;
+            else if (option == 2)
+                _userChoseSum = false;
         }
         public void FindSum (int num)
         {
@@ -64,7 +49,7 @@ namespace Foundation
         }
         public void FindProduct (int num)
         {
-            int product = 1;
+            double product = 1;
             for (int i = 1 ; i <= num ; i++)
             {
                 product *= i;

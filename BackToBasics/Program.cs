@@ -6,7 +6,7 @@ public class Program
     public static void Main(string[] args)
     {
         Menu menu = new Menu();
-        InputHandler handle = new InputHandler();
+        InputHandler handler = new InputHandler();
         Console.WriteLine("Welcome to Vinh's foundational katas");
         MenuOption userSelection = MenuOption.Continue;
         while (userSelection != MenuOption.Quit)
@@ -17,7 +17,7 @@ public class Program
             {
                 case MenuOption.SumFinder:
                     var sumFinder = new SumFinder();
-                    sumFinder.UserChoice = handle.HandleInput();
+                    sumFinder.UserChoice = handler.HandleInput();
                     sumFinder.Execute();
                     break;
 
@@ -28,6 +28,7 @@ public class Program
 
                 case MenuOption.SumOrProduct:
                     var sumOrProduct = new SumOrProduct();
+                    sumOrProduct.UserChoice = handler.HandleInput();
                     sumOrProduct.Execute();
                     break;
 
