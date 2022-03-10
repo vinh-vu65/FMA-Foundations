@@ -44,6 +44,7 @@ public class Program
 
                 case MenuOption.FizzBuzz:
                     var fizzBuzz = new FizzBuzz();
+                    fizzBuzz.UserChoice = handler.HandleInput();
                     fizzBuzz.Execute();
                     break;
 

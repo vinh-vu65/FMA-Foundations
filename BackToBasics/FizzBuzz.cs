@@ -4,15 +4,11 @@ namespace Foundation
 {
     public class FizzBuzz
     {
-        public FizzBuzz()
-        {
-            
-        }
+        public int UserChoice;
         public void Execute()
         {
             InitialPrintMessage();
-            int input = HandleInput();
-            PrintFizzBuzz(input);
+            PrintFizzBuzz(UserChoice);
         }
         public void InitialPrintMessage()
         {
@@ -21,16 +17,6 @@ namespace Foundation
             Console.WriteLine("If a number is divisible by 3, the console will print \"Fizz\"");
             Console.WriteLine("If a number is divisible by 5, the console will print \"Buzz\"");
             Console.WriteLine("If a number is divisible by both 3 and 5, the console will print \"FizzBuzz\"");
-        }
-        public int HandleInput()
-        {
-            int userInput;
-            do 
-            {
-                Console.WriteLine("Please enter a number greater than zero: ");
-                Int32.TryParse(Console.ReadLine(), out userInput);
-            } while (userInput <= 0);
-            return userInput;
         }
         public void PrintFizzBuzz(int num)
         {
