@@ -5,20 +5,16 @@ namespace Foundation
 {
     public class MultiplicationTable
     {
-        public const int MaxMultiplication = 12;
-        public MultiplicationTable()
-        {
-            
-        }
+        public int UserChoice;
+        public const int MultiplicationTableUpperLimit = 12;
         public void Execute()
         {
             PrintInitialMessage();
-            int userInput = HandleInput();
-            for (int i = 1 ; i <= userInput ; i += 6)
+            for (int i = 1 ; i <= UserChoice ; i += 6)
             {
-                if (i + 5 > userInput)
+                if (i + 5 > UserChoice)
                 {
-                    PrintMultiplicationTables(i, userInput);
+                    PrintMultiplicationTables(i, UserChoice);
                 }
                 else
                 {
@@ -31,26 +27,14 @@ namespace Foundation
             Console.WriteLine("You have chosen to run Multiplication Table");
             Console.WriteLine("Please choose a number, the program will then display the multiplication tables from 1 to that number.");
         }
-        
-        public int HandleInput()
-        {
-            int userInput;
-            do 
-            {
-                Console.WriteLine("Please enter a number greater than zero: ");
-                Int32.TryParse(Console.ReadLine(), out userInput);
-            } while (userInput <= 0);
-            return userInput;
-        }
         public void PrintMultiplicationTables(int columnStart, int columnEnd)
         {
-            for ( int i = 1 ; i <= MaxMultiplication ; i++ )
+            for ( int i = 1 ; i <= MultiplicationTableUpperLimit ; i++ )
             {
                 for ( int j = columnStart ; j <= columnEnd ; j++ )
                 {
                     string equation = $"{j} x {i} = {i * j}";
                     Console.Write(equation + "\t");
-                    //Console.Write(new string(' ', 14- multiplicationEquation.Length));
                 }
                 Console.WriteLine();
             }

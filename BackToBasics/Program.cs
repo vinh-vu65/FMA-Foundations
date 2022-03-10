@@ -35,6 +35,7 @@ public class Program
 
                 case MenuOption.MultiplicationTable:
                     var multiplicationTable = new MultiplicationTable();
+                    multiplicationTable.UserChoice = handler.HandleInput();
                     multiplicationTable.Execute();
                     break;
 
