@@ -60,7 +60,3 @@ public class Program
         }
     }
 }
-
-//Refactor code so methods are not in constructor
-//Add fields and properties
-//inheritance / interface

@@ -1,5 +1,4 @@
 using System;
-
 namespace Foundation;
 
 public class GuessingGame
