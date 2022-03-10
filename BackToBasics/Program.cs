@@ -23,6 +23,7 @@ public class Program
 
                 case MenuOption.ThreeFiveSum:
                     var threeFiveSum = new ThreeFiveSum();
+                    threeFiveSum.UserChoice = handler.HandleInput();
                     threeFiveSum.Execute();
                     break;
 
