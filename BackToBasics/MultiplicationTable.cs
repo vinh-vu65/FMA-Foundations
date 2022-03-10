@@ -1,9 +1,9 @@
 using System;
 namespace Foundation;
 
-public class MultiplicationTable
+public class MultiplicationTable : IUserInputProgram
 {
-    public int UserChoice;
+    public int UserChoice {get; set;}
     public const int MultiplicationTableUpperLimit = 12;
     public void Execute()
     {

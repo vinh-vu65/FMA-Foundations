@@ -1,15 +1,15 @@
 using System;
 namespace Foundation;
 
-public class SumFinder
+public class SumFinder : IUserInputProgram
 {
-    public int UserChoice;
+    public int UserChoice {get; set;}
     public void Execute()
     {
-        InitialPrintMessage();
+        PrintInitialMessage();
         FindSum(UserChoice);
     }
-    public void InitialPrintMessage()
+    public void PrintInitialMessage()
     {
         Console.WriteLine("\n You have chosen to run the Sum Finder");
         Console.WriteLine("Please enter a positive number (n) and the program will calculate the sum of all numbers from 1 to n.");

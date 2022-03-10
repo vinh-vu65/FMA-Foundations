@@ -1,15 +1,15 @@
 using System;
 namespace Foundation;
 
-public class FizzBuzz
+public class FizzBuzz : IUserInputProgram
 {
-    public int UserChoice;
+    public int UserChoice {get; set;}
     public void Execute()
     {
-        InitialPrintMessage();
+        PrintInitialMessage();
         PrintFizzBuzz(UserChoice);
     }
-    public void InitialPrintMessage()
+    public void PrintInitialMessage()
     {
         Console.WriteLine("\n You have chosen to run FizzBuzz!");
         Console.WriteLine("Please choose a positive number (n) and the console will print all of the numbers from 1 to n");

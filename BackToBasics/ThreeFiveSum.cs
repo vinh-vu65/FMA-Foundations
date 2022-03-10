@@ -1,15 +1,15 @@
 using System;
 namespace Foundation;
 
-public class ThreeFiveSum
+public class ThreeFiveSum : IUserInputProgram
 {
-    public int UserChoice;
+    public int UserChoice {get; set;}
     public void Execute()
     {
-        InitialPrintMessage();
+        PrintInitialMessage();
         FindThreeFiveSum(UserChoice);
     }
-    public void InitialPrintMessage()
+    public void PrintInitialMessage()
     {
         Console.WriteLine("\n You have chosen to run Three Five Sum");
         Console.WriteLine("Please enter a positive number (n) and the program will calculate the sum of all numbers from 1 to n that are divisible by 3 or 5.");

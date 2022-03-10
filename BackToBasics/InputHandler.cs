@@ -3,7 +3,6 @@ namespace Foundation;
 
 public class InputHandler
 {
-    public int UserInput;
     public int HandleInput()
     {
         int userInput;

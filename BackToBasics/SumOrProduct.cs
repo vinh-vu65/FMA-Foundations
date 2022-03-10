@@ -1,13 +1,13 @@
 using System;
 namespace Foundation;
 
-public class SumOrProduct
+public class SumOrProduct : IUserInputProgram
 {
-    public int UserChoice;
+    public int UserChoice {get; set;}
     private bool _userChoseSum;
     public void Execute()
     {
-        InitialPrintMessage();
+        PrintInitialMessage();
         Console.WriteLine($"You have chosen {UserChoice}.");
         ChooseSumOrProduct();
         if (_userChoseSum)
@@ -15,7 +15,7 @@ public class SumOrProduct
         else
             FindProduct(UserChoice);
     }
-    public void InitialPrintMessage()
+    public void PrintInitialMessage()
     {
         Console.WriteLine("\n You have chosen to run Sum Or Product");
         Console.WriteLine("Please enter a positive number (n)");

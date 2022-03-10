@@ -1,9 +1,9 @@
 using System;
 namespace Foundation;
 
-public class GuessingGame
+public class GuessingGame : IUserInputProgram
 {
-    public int UserChoice;
+    public int UserChoice {get; set;}
     private int _numberToGuess;
     private int _userGuess;
     private int _guessCount;
@@ -18,7 +18,7 @@ public class GuessingGame
         Console.WriteLine("Please choose a number (n). The program will choose a random number between 1 and n and you have to guess what the number is");
         Console.WriteLine("Good luck!");
     }
-    public void RunGuessingGame(int maxNumber)
+    private void RunGuessingGame(int maxNumber)
     {
         int minNumber = 1;
         bool parseInput;
