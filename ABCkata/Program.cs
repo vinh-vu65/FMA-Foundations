@@ -5,7 +5,9 @@ public class Program
 {
     public static void Main(string[] args)
     {
-        
+        var blockBuilder = new BlockBuilder();
+        var WordChecker = new WordChecker();
+        WordChecker.BlocksToCheck = blockBuilder.BlocksToCheck;
     }
 }
 

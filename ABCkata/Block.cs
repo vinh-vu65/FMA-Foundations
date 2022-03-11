@@ -10,6 +10,7 @@ public class Block
     {
         this.FirstValue = FirstValue;
         this.SecondValue = SecondValue;
+        IsUsed = false;
     }
     
 }
