@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 namespace ABCKata;
 
 public class Program
@@ -6,8 +7,9 @@ public class Program
     public static void Main(string[] args)
     {
         var blockBuilder = new BlockBuilder();
-        var WordChecker = new WordChecker();
+        var WordChecker = new WordChecker("COMMON");
         WordChecker.BlocksToCheck = blockBuilder.BlocksToCheck;
+        WordChecker.ExecuteAndPrint();
     }
 }
 

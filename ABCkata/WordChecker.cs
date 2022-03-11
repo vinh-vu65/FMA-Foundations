@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 namespace ABCKata;
 
 public class WordChecker
@@ -9,18 +10,25 @@ public class WordChecker
     public WordChecker(string InputWord)
     {
         this.InputWord = InputWord;
+        BlockContainsLetter = new List<Block>();
     }
-    
+
+    public void ExecuteAndPrint()
+    {
+        GatherBlocks(InputWord);
+        var result = TrySpell(InputWord);
+        Console.WriteLine($"Can we spell {InputWord} with the given blocks: {result}");
+    }
     // Iterate over char array of input word.
     // If any of the blocks contain the same letter required in input word, add to new list of Blocks. 
     public void GatherBlocks(string word)
     {
         char[] charArray = word.ToCharArray();
-        for (int i = 0 ; i < charArray.Length ; i++)
+        for (int i = 0; i < charArray.Length; i++)
         {
             foreach (Block block in BlocksToCheck)
             {
-                if ((block.IsUsed == false) && (block.FirstValue == Char.ToUpper(charArray[i]) || block.SecondValue == Char.ToUpper(charArray[i])))
+                if ((!block.IsUsed) && (block.FirstValue == Char.ToUpper(charArray[i]) || block.SecondValue == Char.ToUpper(charArray[i])))
                 {
                     BlockContainsLetter.Add(block);
                     block.IsUsed = true;
@@ -35,44 +43,37 @@ public class WordChecker
         if (BlockContainsLetter.Count < word.Length)
             return false;
         List<char> wordToList = word.ToList();
-        foreach (char letter in wordToList)
+        foreach (Block block in BlockContainsLetter)
+        {
+            block.IsUsed = false;
+        }
+        return CompareBlockCharToCharList(wordToList);
+    }
+
+    public bool CompareBlockCharToCharList(List<char> wordList)
+    {
+        var removedLetters = new List<char>(wordList);
+        foreach (char letter in wordList)
         {
             foreach (Block block in BlockContainsLetter)
             {
-                if (block.FirstValue == Char.ToUpper(letter))
+                if ((!block.IsUsed) && block.FirstValue == Char.ToUpper(letter))
                 {
                     block.IsUsed = true;
-                    wordToList.Remove(letter);
+                    removedLetters.Remove(letter);
                 }
-            }
-        }
-        foreach (char letter in wordToList)
-        {
-            foreach (Block block in BlockContainsLetter)
-            {
                 if ((!block.IsUsed) && block.SecondValue == Char.ToUpper(letter))
                 {
                     block.IsUsed = true;
-                    wordToList.Remove(letter);
+                    removedLetters.Remove(letter);
                 }
             }
         }
-        if (wordToList == null)
+        if (removedLetters.Count == 0)
         {
-            return true;
-        } else return false;
+        return true;
+        }
+        else
+            return false;
     }
-    // TODO: Refactor above method to remove duplicate code
-
-
-    //public void CompareCharacterFromBlock(char c, List<char> word)
-    //{
-    //    foreach (char letter in word)
-    //    {
-    //        if (letter == c)
-    //            return true;
-    //        else 
-    //            return false;
-    //    }
-    //}
 }
