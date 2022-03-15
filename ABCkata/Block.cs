@@ -1,4 +1,3 @@
-using System.Reflection.Metadata;
 using System;
 using System.Collections.Generic;
 namespace ABCKata;
@@ -14,5 +13,4 @@ public class Block
         this.SecondValue = SecondValue;
         IsUsed = false;
     }
-    
 }

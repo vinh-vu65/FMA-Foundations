@@ -11,18 +11,21 @@ public class WordChecker
 
     public void ExecuteAndPrint()
     {
-        
         InputWord = GetWordToSpell();
+        if (InputWord.ToLower() == "q")
+        {
+            return;
+        }
         GatherBlocks(InputWord);
         var result = TrySpell(InputWord);
-        Console.WriteLine($"Can we spell {InputWord} with the given blocks: {result}");
+        Console.WriteLine($"Can we spell {InputWord.ToUpper()} with the given blocks: {result}");
     }
     public string GetWordToSpell()
     {
         string s;
         do
         {
-            Console.Write("Please enter word to spell: ");
+            Console.Write("Please enter word to spell (or enter the letter q to quit): ");
             s = Console.ReadLine();
         }
         while (String.IsNullOrWhiteSpace(s) || !IsValid(s));
@@ -40,22 +43,28 @@ public class WordChecker
         word = word.ToUpper();
         BlockContainsLetter = new List<Block>();
         foreach (Block block in BlocksToCheck)
+        {
+            if (word.Contains(block.FirstValue) || word.Contains(block.SecondValue))
             {
-                if (word.Contains(block.FirstValue) || word.Contains(block.SecondValue))
-                {
-                    BlockContainsLetter.Add(block);
-                }
+                BlockContainsLetter.Add(block);
             }
+        }
     }
 
     public bool TrySpell(string word)
     {
         if (BlockContainsLetter.Count < word.Length)
+        {
             return false;
+        }
+        foreach (Block block in BlockContainsLetter)
+        {
+            block.IsUsed = false;
+        }
         List<char> wordToList = word.ToList();
         return CompareBlockCharToCharList(wordToList);
     }
-    
+
     // Iterate over new sublist of Blocks and remove letters from the given word as blocks are found
     public bool CompareBlockCharToCharList(List<char> wordList)
     {

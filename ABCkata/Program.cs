@@ -9,6 +9,9 @@ public class Program
         var blockBuilder = new BlockBuilder();
         var wordChecker = new WordChecker();
         wordChecker.BlocksToCheck = blockBuilder.BlocksToCheck;
-        wordChecker.ExecuteAndPrint();
+        do
+        {
+            wordChecker.ExecuteAndPrint();
+        } while (wordChecker.InputWord.ToLower() != "q");
     }
 }
