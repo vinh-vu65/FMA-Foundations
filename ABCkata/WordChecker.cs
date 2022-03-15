@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using System;
 using System.Collections.Generic;
 namespace ABCKata;
@@ -10,11 +11,27 @@ public class WordChecker
 
     public void ExecuteAndPrint()
     {
-        Console.Write("Please enter word to spell: ");
-        InputWord = Console.ReadLine();
+        
+        InputWord = GetWordToSpell();
         GatherBlocks(InputWord);
         var result = TrySpell(InputWord);
         Console.WriteLine($"Can we spell {InputWord} with the given blocks: {result}");
+    }
+    public string GetWordToSpell()
+    {
+        string s;
+        do
+        {
+            Console.Write("Please enter word to spell: ");
+            s = Console.ReadLine();
+        }
+        while (String.IsNullOrWhiteSpace(s) || !IsValid(s));
+        return s;
+    }
+    private bool IsValid(string str)
+    {
+        Regex reg = new Regex("^[a-zA-Z]+$");
+        return reg.IsMatch(str);
     }
 
     // Create smaller sublist of Blocks which contain same letters as input word.
