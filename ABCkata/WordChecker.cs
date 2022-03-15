@@ -5,9 +5,21 @@ namespace ABCKata;
 
 public class WordChecker
 {
+    public BlockBuilder blockBuilder;
     public List<Block> BlocksToCheck;
     public List<Block> BlockContainsLetter;
     public string InputWord;
+
+    public WordChecker()
+    {
+        blockBuilder = new BlockBuilder();
+        this.BlocksToCheck = blockBuilder.BlocksToCheck;
+    }
+    public static bool RegexValid(string str)
+    {
+        Regex reg = new Regex("^[a-zA-Z]+$");
+        return reg.IsMatch(str);
+    }
 
     public void ExecuteAndPrint()
     {
@@ -28,13 +40,8 @@ public class WordChecker
             Console.Write("Please enter word to spell (or enter the letter q to quit): ");
             s = Console.ReadLine();
         }
-        while (String.IsNullOrWhiteSpace(s) || !IsValid(s));
+        while (String.IsNullOrWhiteSpace(s) || !RegexValid(s));
         return s;
-    }
-    private bool IsValid(string str)
-    {
-        Regex reg = new Regex("^[a-zA-Z]+$");
-        return reg.IsMatch(str);
     }
 
     // Create smaller sublist of Blocks which contain same letters as input word.
@@ -50,6 +57,13 @@ public class WordChecker
             }
         }
     }
+    public void ResetBlocks()
+    {
+        foreach (Block block in BlockContainsLetter)
+        {
+            block.IsUsed = false;
+        }
+    }
 
     public bool TrySpell(string word)
     {
@@ -57,10 +71,7 @@ public class WordChecker
         {
             return false;
         }
-        foreach (Block block in BlockContainsLetter)
-        {
-            block.IsUsed = false;
-        }
+        ResetBlocks();
         List<char> wordToList = word.ToList();
         return CompareBlockCharToCharList(wordToList);
     }
