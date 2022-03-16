@@ -1,13 +1,44 @@
+using System.ComponentModel.DataAnnotations.Schema;
 using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 namespace ABCKata;
 
 public class BlockBuilder
 {
     public List<Block> BlocksToCheck;
+    private string userInput;
+    private char userFirstValue, userSecondValue;
+    private bool inputValid = false;
+    private bool userChooseSample;
+    private int numberOfUserBlocks;
+
     public BlockBuilder()
     {
-        BlocksToCheck = LoadSampleBlocks();
+        ChooseBlocksToBuild();
+        BlocksToCheck = userChooseSample ? LoadSampleBlocks() : LoadUserInputBlocks();
+        System.Console.WriteLine("-- Block loading complete -- \n");
+    }
+    public void ChooseBlocksToBuild()
+    {
+        int userChoice;
+        System.Console.WriteLine("Would you like to load the program's sample blocks, or enter your own?");
+        System.Console.WriteLine("Enter 1 to load sample or 2 to enter your own: ");
+        do
+        {
+            Int32.TryParse(Console.ReadLine(), out userChoice);
+            if (userChoice == 1 || userChoice == 2)
+            {
+                inputValid = true;
+            }
+            else
+            {
+                System.Console.WriteLine("Please enter 1 to load sample blocks or 2 to enter your own.");
+                System.Console.Write("Try again: ");
+            }
+        } while (!inputValid);
+        ResetValidCheck();
+        userChooseSample = (userChoice == 1) ? true : false;
     }
     public List<Block> LoadSampleBlocks()
     {
@@ -36,12 +67,65 @@ public class BlockBuilder
         };
         return sampleBlocks;
     }
-
-    //TODO: Write method to load blocks as input from user
-    //public List<Block> UserInputBlocks()
-    //{
-    //    List<Block> userBlocks = new List<Block>();
-    //    Console.WriteLine("Please enter first block letter");
-    //    return userBlocks;
-    //}
+    public List<Block> LoadUserInputBlocks()
+    {
+        List<Block> userBlocks = new List<Block>();
+        UserBlockQuantity();
+        ResetValidCheck();
+        for (int i = 0 ; i < numberOfUserBlocks ; i++)
+        {
+            userInput = ReadUserInput();
+            var blockToAdd = ReturnBlockFromString(userInput);
+            userBlocks.Add(blockToAdd);
+        }
+        return userBlocks;
+    }
+    public void UserBlockQuantity()
+    {
+        Console.WriteLine("Please enter the number of blocks you would like to add: ");
+        do
+        {
+            bool tryParse = Int32.TryParse(Console.ReadLine(), out numberOfUserBlocks);
+            if ((tryParse) && numberOfUserBlocks > 0)
+            {
+                inputValid = true;
+            }
+            else
+            {
+                System.Console.WriteLine("Input not valid, please enter a number greater than zero.");
+                System.Console.Write("Try again: ");
+            }
+        } while (!inputValid);
+        ResetValidCheck();
+    }
+    public string ReadUserInput()
+    {
+        string input;
+        Console.Write("Please enter both block letters together (eg. AB): ");
+        do
+        {
+            input = Console.ReadLine().ToUpper();
+            if (input.Length == 2 && WordChecker.RegexValid(input))
+            {
+                inputValid = true;
+            }
+            else
+            {
+                System.Console.WriteLine("Input not valid, please enter two letters for the block (eg. RG or KC)");
+                System.Console.Write("Try again: ");
+            }
+        } while (!inputValid);
+        ResetValidCheck();
+        return input;
+    }
+    public Block ReturnBlockFromString(string input)
+    {
+        userFirstValue = input[0];
+        userSecondValue = input[1];
+        return new Block(userFirstValue, userSecondValue);
+    }
+    public void ResetValidCheck()
+    {
+        inputValid = false;
+    }
 }
