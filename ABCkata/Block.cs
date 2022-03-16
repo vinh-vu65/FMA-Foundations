@@ -4,13 +4,14 @@ namespace ABCKata;
 
 public class Block
 {
-    public char FirstValue;
-    public char SecondValue;
-    public bool IsUsed;
-    public Block(char FirstValue, char SecondValue)
+    public char FirstValue {get; set;}
+    public char SecondValue {get; set;}
+    public bool IsUsed {get; set;}
+    
+    public Block(char firstValue, char secondValue)
     {
-        this.FirstValue = FirstValue;
-        this.SecondValue = SecondValue;
+        FirstValue = firstValue;
+        SecondValue = secondValue;
         IsUsed = false;
     }
 }

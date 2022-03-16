@@ -8,19 +8,18 @@ public class WordChecker
     public BlockBuilder blockBuilder;
     public List<Block> BlocksToCheck;
     public List<Block> BlockContainsLetter;
-    public string InputWord;
+    public string InputWord {get; set;}
 
     public WordChecker()
     {
         blockBuilder = new BlockBuilder();
         this.BlocksToCheck = blockBuilder.BlocksToCheck;
     }
-    public static bool RegexValid(string str)
+    public static bool IsValid(string str)
     {
         Regex reg = new Regex("^[a-zA-Z]+$");
         return reg.IsMatch(str);
     }
-
     public void ExecuteAndPrint()
     {
         InputWord = GetWordToSpell();
@@ -28,7 +27,6 @@ public class WordChecker
         {
             return;
         }
-        GatherBlocks(InputWord);
         var result = TrySpell(InputWord);
         Console.WriteLine($"Can we spell {InputWord.ToUpper()} with the given blocks: {result}");
     }
@@ -40,48 +38,27 @@ public class WordChecker
             Console.Write("Please enter word to spell (or enter the letter q to quit): ");
             s = Console.ReadLine();
         }
-        while (String.IsNullOrWhiteSpace(s) || !RegexValid(s));
-        return s;
-    }
-
-    // Create smaller sublist of Blocks which contain same letters as input word.
-    public void GatherBlocks(string word)
-    {
-        word = word.ToUpper();
-        BlockContainsLetter = new List<Block>();
-        foreach (Block block in BlocksToCheck)
-        {
-            if (word.Contains(block.FirstValue) || word.Contains(block.SecondValue))
-            {
-                BlockContainsLetter.Add(block);
-            }
-        }
+        while (String.IsNullOrWhiteSpace(s) || !IsValid(s));
+        return s.ToUpper();
     }
     public void ResetBlocks()
     {
-        foreach (Block block in BlockContainsLetter)
+        foreach (Block block in BlocksToCheck)
         {
             block.IsUsed = false;
         }
     }
-
     public bool TrySpell(string word)
     {
-        if (BlockContainsLetter.Count < word.Length)
-        {
-            return false;
-        }
         ResetBlocks();
         return CanMake(word);
     }
-
-    // Iterate over new sublist of Blocks and remove letters from the given word as blocks are found
     public bool CanMake(string word)
     {
         foreach (char letter in word)
         {
             bool found = false;
-            foreach (Block block in BlockContainsLetter)
+            foreach (Block block in BlocksToCheck)
             {
                 if ((!block.IsUsed) && (block.FirstValue == letter || block.SecondValue == letter))
                 {

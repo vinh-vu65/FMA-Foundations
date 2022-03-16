@@ -6,7 +6,7 @@ namespace ABCKata;
 
 public class BlockBuilder
 {
-    public List<Block> BlocksToCheck;
+    public List<Block> BlocksToCheck {get; set;}
     private string userInput;
     private char userFirstValue, userSecondValue;
     private bool inputValid = false;
@@ -17,13 +17,13 @@ public class BlockBuilder
     {
         ChooseBlocksToBuild();
         BlocksToCheck = userChooseSample ? LoadSampleBlocks() : LoadUserInputBlocks();
-        System.Console.WriteLine("-- Block loading complete -- \n");
+        Console.WriteLine("-- Block loading complete -- \n");
     }
     public void ChooseBlocksToBuild()
     {
         int userChoice;
-        System.Console.WriteLine("Would you like to load the program's sample blocks, or enter your own?");
-        System.Console.WriteLine("Enter 1 to load sample or 2 to enter your own: ");
+        Console.WriteLine("Would you like to load the program's sample blocks, or enter your own?");
+        Console.WriteLine("Enter 1 to load sample or 2 to enter your own: ");
         do
         {
             Int32.TryParse(Console.ReadLine(), out userChoice);
@@ -33,8 +33,8 @@ public class BlockBuilder
             }
             else
             {
-                System.Console.WriteLine("Please enter 1 to load sample blocks or 2 to enter your own.");
-                System.Console.Write("Try again: ");
+                Console.WriteLine("Please enter 1 to load sample blocks or 2 to enter your own.");
+                Console.Write("Try again: ");
             }
         } while (!inputValid);
         ResetValidCheck();
@@ -85,15 +85,15 @@ public class BlockBuilder
         Console.WriteLine("Please enter the number of blocks you would like to add: ");
         do
         {
-            bool tryParse = Int32.TryParse(Console.ReadLine(), out numberOfUserBlocks);
-            if ((tryParse) && numberOfUserBlocks > 0)
+            Int32.TryParse(Console.ReadLine(), out numberOfUserBlocks);
+            if (numberOfUserBlocks > 0)
             {
                 inputValid = true;
             }
             else
             {
-                System.Console.WriteLine("Input not valid, please enter a number greater than zero.");
-                System.Console.Write("Try again: ");
+                Console.WriteLine("Input not valid, please enter a number greater than zero.");
+                Console.Write("Try again: ");
             }
         } while (!inputValid);
         ResetValidCheck();
@@ -105,14 +105,14 @@ public class BlockBuilder
         do
         {
             input = Console.ReadLine().ToUpper();
-            if (input.Length == 2 && WordChecker.RegexValid(input))
+            if (input.Length == 2 && WordChecker.IsValid(input))
             {
                 inputValid = true;
             }
             else
             {
-                System.Console.WriteLine("Input not valid, please enter two letters for the block (eg. RG or KC)");
-                System.Console.Write("Try again: ");
+                Console.WriteLine("Input not valid, please enter two letters for the block (eg. RG or KC)");
+                Console.Write("Try again: ");
             }
         } while (!inputValid);
         ResetValidCheck();

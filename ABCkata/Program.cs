@@ -6,7 +6,7 @@ public class Program
 {
     public static void Main(string[] args)
     {
-        System.Console.WriteLine("Welcome to the ABC Kata Word Checker! \n");
+        Console.WriteLine("Welcome to the ABC Kata Word Checker! \n");
         var wordChecker = new WordChecker();
         do
         {
