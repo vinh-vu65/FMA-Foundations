@@ -72,39 +72,29 @@ public class WordChecker
             return false;
         }
         ResetBlocks();
-        List<char> wordToList = word.ToList();
-        return CompareBlockCharToCharList(wordToList);
+        return CanMake(word);
     }
 
     // Iterate over new sublist of Blocks and remove letters from the given word as blocks are found
-    public bool CompareBlockCharToCharList(List<char> wordList)
+    public bool CanMake(string word)
     {
-        var remainingLetters = new List<char>(wordList);
-        foreach (char letter in wordList)
+        foreach (char letter in word)
         {
+            bool found = false;
             foreach (Block block in BlockContainsLetter)
             {
-                if ((!block.IsUsed) && block.FirstValue == Char.ToUpper(letter))
+                if ((!block.IsUsed) && (block.FirstValue == letter || block.SecondValue == letter))
                 {
                     block.IsUsed = true;
-                    remainingLetters.Remove(letter);
-                    break;
-                }
-                if ((!block.IsUsed) && block.SecondValue == Char.ToUpper(letter))
-                {
-                    block.IsUsed = true;
-                    remainingLetters.Remove(letter);
+                    found = true;
                     break;
                 }
             }
+            if (!found)
+            {
+                return false;
+            }
         }
-        if (remainingLetters.Count == 0)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return true;
     }
 }
