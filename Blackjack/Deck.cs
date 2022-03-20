@@ -9,10 +9,11 @@ public class Deck
     public Deck()
     {
         LoadDeck();
+        ShuffleDeck();
     }
-
     private void LoadDeck()
     {
+        Console.WriteLine("Preparing to load deck... \n");
         PlayingDeck = new List<Card>();
         var suits = Enum.GetValues<Card.Suit>();
         var values = Enum.GetValues<Card.Value>();
@@ -24,15 +25,16 @@ public class Deck
                 PlayingDeck.Add(cardToAdd);
             }
         }
+        Console.WriteLine("Standard playing deck has finished loading.");
     }
-
     public void ShuffleDeck()
     {
+        Console.WriteLine("Preparing to shuffle deck... \n");
         var rnd = new Random();
         var shuffledDeck = PlayingDeck.OrderBy(item => rnd.Next());
         PlayingDeck = shuffledDeck.ToList();
+        Console.WriteLine("Deck has been shuffled.");
     }
-
     public void DrawFromDeck()
     {
         var deckSize = PlayingDeck.Count;
