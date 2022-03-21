@@ -8,10 +8,10 @@ public class Deck
 
     public Deck()
     {
-        LoadDeck();
+        LoadCards();
         ShuffleDeck();
     }
-    private void LoadDeck()
+    private void LoadCards()
     {
         Console.WriteLine("Preparing to load deck... \n");
         PlayingDeck = new List<Card>();
@@ -25,7 +25,7 @@ public class Deck
                 PlayingDeck.Add(cardToAdd);
             }
         }
-        Console.WriteLine("Standard playing deck has finished loading.");
+        Console.WriteLine("Standard playing deck has finished loading. \n");
     }
     public void ShuffleDeck()
     {
@@ -33,7 +33,7 @@ public class Deck
         var rnd = new Random();
         var shuffledDeck = PlayingDeck.OrderBy(item => rnd.Next());
         PlayingDeck = shuffledDeck.ToList();
-        Console.WriteLine("Deck has been shuffled.");
+        Console.WriteLine("Deck has been shuffled. \n");
     }
     public void DrawFromDeck()
     {

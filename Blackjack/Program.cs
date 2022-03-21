@@ -4,32 +4,28 @@ public class Program
 {
     public static void Main(string[] args)
     {
-        Card myCard = new Card(Card.Value.QUEEN, Card.Suit.HEART);
-        Console.WriteLine(myCard);
-        Console.WriteLine(myCard.GetValue());
-
-        var myDeck = new Deck();
-        foreach (var card in myDeck.PlayingDeck)
+        var gameApplication = new GameApplication();
+        
+        
+        var dealer = new Dealer();
+        
+        
+        gameApplication.PrintStartupMessage();
+        var deck = new Deck();
+        var user = new User(deck);
+        var gameEngine = new GameEngine(user);
+        
+        // User hit once to get a card, user will hit again in do/while loop to get initial 2 cards
+        user.Hit();
+        
+        do
         {
-            Console.WriteLine(card);
-        }
-
-        Console.WriteLine("\n Deck Load Complete, time to shuffle \n");
-        myDeck.ShuffleDeck();
-        foreach (var card in myDeck.PlayingDeck)
-        {
-            Console.WriteLine(card);
-        }
-
-        Console.WriteLine("Let's draw a card \n");
-        myDeck.DrawFromDeck();
-        foreach (var card in myDeck.PlayingDeck)
-        {
-            Console.WriteLine(card);
-        }
-
-        Console.WriteLine("The card I drew is \n");
-        Console.WriteLine(myDeck.NextCardToDraw);
+            user.Hit();
+            user.PrintHand();
+            gameEngine.CalculateHandValue(user);
+            user.PrintHandValue();
+            gameEngine.HandleInput();
+        } while (!user.Stay);
         
     }
 }
