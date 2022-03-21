@@ -5,13 +5,10 @@ public class Program
     public static void Main(string[] args)
     {
         var gameApplication = new GameApplication();
-        
-        
-        var dealer = new Dealer();
-        
-        
         gameApplication.PrintStartupMessage();
         var deck = new Deck();
+        var dealer = new Dealer(deck);
+        
         var user = new User(deck);
         var gameEngine = new GameEngine(user);
         
@@ -21,11 +18,21 @@ public class Program
         do
         {
             user.Hit();
-            user.PrintHand();
             gameEngine.CalculateHandValue(user);
-            user.PrintHandValue();
+            user.PrintHand();
             gameEngine.HandleInput();
         } while (!user.Stay);
         
+        dealer.Hit();
+        do
+        {
+            dealer.Hit();
+            gameEngine.CalculateHandValue(dealer);
+            dealer.PrintHand();
+            if (dealer.HandValue > 17)
+            {
+                dealer.Stay = true;
+            }
+        } while (!dealer.Stay);
     }
 }

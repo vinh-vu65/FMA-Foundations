@@ -27,10 +27,7 @@ public class User : IPlayer
         {
             Console.Write(card + " ");
         }
+        Console.WriteLine($"\n Your hand's current total is: {HandValue}");
     }
-
-    public void PrintHandValue()
-    {
-        Console.WriteLine($"Your hand's current total is: {HandValue}");
-    }
+    
 }
