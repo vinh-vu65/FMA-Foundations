@@ -27,7 +27,8 @@ public class Deck
         }
         Console.WriteLine("Standard playing deck has finished loading. \n");
     }
-    public void ShuffleDeck()
+
+    private void ShuffleDeck()
     {
         Console.WriteLine("Preparing to shuffle deck... \n");
         var rnd = new Random();

@@ -26,27 +26,41 @@ public class UnitTest1
         
         // When, Given, Then
     }
+    
+    [Fact]
+    public void WhenCardValueIsGivenAceThenValueEqualEleven()
+    {
+        // Arrange:
+        var pictureCard = new Card(Card.Value.ACE, Card.Suit.HEART);
+        
+        // Act:
+        var result = pictureCard.GetValue();
+        
+        // Assert:
+        Assert.Equal(11, result);
+    }
 }
-/*
+
 public class UnitTest2
 {
     [Fact]
     public void AceValueEqualsOneWhenBust()
     {
         // Arrange:
-        var player = new User()
+        var deck = new Deck();
+        var player = new User(deck);
         player.Hand = new List<Card>();
         player.Hand.Add(new Card(Card.Value.ACE, Card.Suit.CLUB));
         player.Hand.Add(new Card(Card.Value.JACK, Card.Suit.SPADE));
         player.Hand.Add(new Card(Card.Value.FIVE, Card.Suit.SPADE));
 
-        var engine = new GameEngine();
+        var engine = new GameEngine(player);
 
         // Act:
-        var result = engine.CalculateHandValue(player);
+        engine.CalculateHandValue(player);
+        var result = player.HandValue;
 
         // Assert:
         Assert.Equal(16, result);
     }
 }
-*/

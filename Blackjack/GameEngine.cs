@@ -4,8 +4,6 @@ public class GameEngine
 {
     // DetermineWinner()
     // CalculateHandValue() -> Ace = 11, if hand > 21 and Hand.Contains(Ace), ace value = 1
-    public List<Card> PlayingDeck;
-    public Deck Deck;
     public User User;
     public Dealer Dealer;
     private bool inputValid;
@@ -18,11 +16,21 @@ public class GameEngine
     public void CalculateHandValue(IPlayer player)
     {
         int value = 0;
+        int aceCounter = 0;
         foreach (var card in player.Hand)
         {
             value += card.GetValue();
+            if (card.CardValue == Card.Value.ACE)
+            {
+                aceCounter++;
+            }
         }
 
+        while (value > 21 && aceCounter > 0)
+        {
+            value -= 10;
+            aceCounter--;
+        }
         player.HandValue = value;
     }
 
