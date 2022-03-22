@@ -2,17 +2,14 @@ namespace BlackJack;
 
 public class GameEngine
 {
-    // DetermineWinner()
-    // CalculateHandValue() -> Ace = 11, if hand > 21 and Hand.Contains(Ace), ace value = 1
     public User User;
-    public Dealer Dealer;
     public Deck Deck;
     private bool inputValid = false;
+    public bool UserWins, DealerWins, GameTie;
 
-    public GameEngine(User user, Dealer dealer, Deck deck)
+    public GameEngine(User user, Deck deck)
     {
         User = user;
-        Dealer = dealer;
         Deck = deck;
     }
         // Calculate initial hand
@@ -42,16 +39,7 @@ public class GameEngine
     {
         Deck.DrawFromDeck();
         player.Hand.Add(Deck.NextCardToDraw);
-    }
-
-    public void DealInitialHand(IPlayer player)
-    {
-        for (int i = 0; i < 2; i++)
-        {
-            DealToPlayer(player);
-        }
-
-        Console.WriteLine($"{player} has been dealt two cards.");
+        Console.WriteLine($"{player} has drawn {Deck.NextCardToDraw}");
     }
 
     public void HandleInput()
@@ -83,32 +71,22 @@ public class GameEngine
         if (player.HandValue > 21)
         {
             player.Bust = true;
+            Console.WriteLine($"{player} has bust.");
         }
     }
     public void DetermineWinner(User user, Dealer dealer)
     {
-        if (user.Bust && dealer.Bust)
+        if ((user.Bust && dealer.Bust) || (21 - user.HandValue == 21 - dealer.HandValue))
         {
-            tie
+            GameTie = true;
         }
-
-        if (user.Bust && !dealer.Bust)
+        else if ((user.Bust && !dealer.Bust) || (21 - user.HandValue > 21 - dealer.HandValue))
         {
-            dealer wins
+            DealerWins = true;
         }
-
-        if (!user.Bust && dealer.Bust)
+        else if ((!user.Bust && dealer.Bust) || (21 - user.HandValue < 21 - dealer.HandValue))
         {
-            user wins
-        }
-
-        if ((21 - user.HandValue) < (21 - dealer.HandValue))
-        {
-            user wins
-        }
-        else
-        {
-            dealer wins
+            UserWins = true;
         }
     }
 }
