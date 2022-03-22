@@ -5,6 +5,7 @@ public class GameApplication
     public User User;
     public Dealer Dealer;
     public GameEngine GameEngine;
+    
     public GameApplication(User user, Dealer dealer, GameEngine gameEngine)
     {
         User = user;
@@ -28,22 +29,18 @@ public class GameApplication
     public void Run()
     {
         UserTurn();
-        GameEngine.CheckIfBust(User);
         DealerTurn();
-        GameEngine.CheckIfBust(Dealer);
         GameEngine.DetermineWinner(User, Dealer);
         PrintWinnerMessage();
     }
     
     public void UserTurn()
     {
+        // Deal 1 card to user pre-loop. Code in loop will deal again once, resulting in initial 2 cards in hand.
         GameEngine.DealToPlayer(User);
         do
         {
-            GameEngine.DealToPlayer(User);
-            GameEngine.CalculateHandValue(User);
-            GameEngine.CheckIfBust(User);
-            PrintHand(User);
+            PlayerTurnLogic(User);
             if (User.Bust)
             {
                 return;
@@ -54,19 +51,24 @@ public class GameApplication
 
     public void DealerTurn()
     {
+        // Deal 1 card to dealer pre-loop. Code in loop will deal again once, resulting in initial 2 cards in hand.
         GameEngine.DealToPlayer(Dealer);
         do
         {
-            GameEngine.DealToPlayer(Dealer);
-            GameEngine.CalculateHandValue(Dealer);
-            GameEngine.CheckIfBust(Dealer);
-            PrintHand(Dealer);
+            PlayerTurnLogic(Dealer);
             if (Dealer.HandValue > 17)
             {
                 Dealer.Stay = true;
             }
         } while (!Dealer.Stay);
+    }
 
+    public void PlayerTurnLogic(IPlayer player)
+    {
+        GameEngine.DealToPlayer(player);
+        GameEngine.CalculateHandValue(player);
+        PrintHand(player);
+        GameEngine.CheckIfBust(player);
     }
 
     private void PrintHand(IPlayer player)

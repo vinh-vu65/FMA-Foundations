@@ -5,15 +5,16 @@ public class GameEngine
     public User User;
     public Deck Deck;
     private bool inputValid = false;
-    public bool UserWins, DealerWins, GameTie;
+    public bool UserWins = false;
+    public bool DealerWins = false;
+    public bool GameTie = false;
 
     public GameEngine(User user, Deck deck)
     {
         User = user;
         Deck = deck;
     }
-        // Calculate initial hand
-        // Seperate value calculator and ace handling
+    
     public void CalculateHandValue(IPlayer player)
     {
         int value = 0;
@@ -74,17 +75,20 @@ public class GameEngine
             Console.WriteLine($"{player} has bust.");
         }
     }
+    
     public void DetermineWinner(User user, Dealer dealer)
     {
-        if ((user.Bust && dealer.Bust) || (21 - user.HandValue == 21 - dealer.HandValue))
+        bool neitherBust = !user.Bust && !dealer.Bust;
+        
+        if ((user.Bust && dealer.Bust) || ((neitherBust) && (21 - user.HandValue == 21 - dealer.HandValue)))
         {
             GameTie = true;
         }
-        else if ((user.Bust && !dealer.Bust) || (21 - user.HandValue > 21 - dealer.HandValue))
+        else if ((user.Bust && !dealer.Bust) || ((neitherBust) && (21 - user.HandValue > 21 - dealer.HandValue)))
         {
             DealerWins = true;
         }
-        else if ((!user.Bust && dealer.Bust) || (21 - user.HandValue < 21 - dealer.HandValue))
+        else if ((!user.Bust && dealer.Bust) || ((neitherBust) && (21 - user.HandValue < 21 - dealer.HandValue)))
         {
             UserWins = true;
         }
