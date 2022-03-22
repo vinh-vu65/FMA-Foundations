@@ -48,13 +48,13 @@ public class UnitTest2
     {
         // Arrange:
         var deck = new Deck();
-        var player = new User(deck);
+        var player = new User();
         player.Hand = new List<Card>();
         player.Hand.Add(new Card(Card.Value.ACE, Card.Suit.CLUB));
         player.Hand.Add(new Card(Card.Value.JACK, Card.Suit.SPADE));
         player.Hand.Add(new Card(Card.Value.FIVE, Card.Suit.SPADE));
 
-        var engine = new GameEngine(player);
+        var engine = new GameEngine(player, deck);
 
         // Act:
         engine.CalculateHandValue(player);
