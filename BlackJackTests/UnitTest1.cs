@@ -7,13 +7,13 @@ using Xunit;
 
 namespace BlackJackTests;
 
-public class UnitTest1
+public class TestCardValue
 {
     [Theory]
     [InlineData(Card.Value.KING)]
     [InlineData(Card.Value.QUEEN)]
     [InlineData(Card.Value.JACK)]
-    public void PictureCardReturnValueOf10(Card.Value value)
+    public void WhenCardValueIsGivenPictureThenValueEqualsTen(Card.Value value)
     {
         // Arrange:
         var pictureCard = new Card(value, Card.Suit.SPADE);
@@ -31,20 +31,16 @@ public class UnitTest1
     public void WhenCardValueIsGivenAceThenValueEqualEleven()
     {
         // Arrange:
-        var pictureCard = new Card(Card.Value.ACE, Card.Suit.HEART);
+        var aceCard = new Card(Card.Value.ACE, Card.Suit.HEART);
         
         // Act:
-        var result = pictureCard.GetValue();
+        var result = aceCard.GetValue();
         
         // Assert:
         Assert.Equal(11, result);
     }
-}
-
-public class UnitTest2
-{
     [Fact]
-    public void AceValueEqualsOneWhenBust()
+    public void WhenAceIsPresentInDeckAndHandValueIsGivenOverBustThenAceValueEqualsOne()
     {
         // Arrange:
         var deck = new Deck();
@@ -62,5 +58,116 @@ public class UnitTest2
 
         // Assert:
         Assert.Equal(16, result);
+    }
+}
+
+public class TestGameWinnerLogic
+{
+    [Fact]
+    public void WhenDealerHandIsGivenBustAndUserIsNotBustThenUserWins()
+    
+    {
+        // Arrange: 
+        var dealer = new Dealer();
+        dealer.HandValue = 22;
+        var user = new User();
+        user.HandValue = 20;
+        var deck = new Deck();
+        var engine = new GameEngine(user, deck);
+        
+        // Act:
+        engine.CheckIfBust(dealer);
+        engine.CheckIfBust(user);
+        engine.DetermineWinner(user, dealer);
+        var result = engine.UserWins;
+        
+        // Assert:
+        Assert.True(result);
+    }
+    
+    [Fact]
+    public void WhenUserHandIsGivenBustAndDealerIsNotBustThenDealerWins()
+
+    {
+        // Arrange: 
+        var dealer = new Dealer();
+        dealer.HandValue = 3;
+        var user = new User();
+        user.HandValue = 22;
+        var deck = new Deck();
+        var engine = new GameEngine(user, deck);
+        
+        // Act:
+        engine.CheckIfBust(dealer);
+        engine.CheckIfBust(user);
+        engine.DetermineWinner(user, dealer);
+        var result = engine.DealerWins;
+        
+        // Assert:
+        Assert.True(result);
+    }
+    [Fact]
+    public void WhenBothDealerAndUserBustThenGameIsATie()
+
+    {
+        // Arrange: 
+        var dealer = new Dealer();
+        dealer.HandValue = 22;
+        var user = new User();
+        user.HandValue = 23;
+        var deck = new Deck();
+        var engine = new GameEngine(user, deck);
+        
+        // Act:
+        engine.CheckIfBust(dealer);
+        engine.CheckIfBust(user);
+        engine.DetermineWinner(user, dealer);
+        var result = engine.GameTie;
+        
+        // Assert:
+        Assert.True(result);
+    }
+
+    [Fact]
+    public void WhenNeitherUserOrDealerBustButUserCloserTo21ThenUserWins()
+
+    {
+        // Arrange: 
+        var dealer = new Dealer();
+        dealer.HandValue = 19;
+        var user = new User();
+        user.HandValue = 20;
+        var deck = new Deck();
+        var engine = new GameEngine(user, deck);
+        
+        // Act:
+        engine.CheckIfBust(dealer);
+        engine.CheckIfBust(user);
+        engine.DetermineWinner(user, dealer);
+        var result = engine.UserWins;
+        
+        // Assert:
+        Assert.True(result);
+    }
+    [Fact]
+    public void WhenNeitherUserOrDealerBustButDealerCloserTo21ThenDealerWins()
+
+    {
+        // Arrange: 
+        var dealer = new Dealer();
+        dealer.HandValue = 2;
+        var user = new User();
+        user.HandValue = 1;
+        var deck = new Deck();
+        var engine = new GameEngine(user, deck);
+        
+        // Act:
+        engine.CheckIfBust(dealer);
+        engine.CheckIfBust(user);
+        engine.DetermineWinner(user, dealer);
+        var result = engine.DealerWins;
+        
+        // Assert:
+        Assert.True(result);
     }
 }
