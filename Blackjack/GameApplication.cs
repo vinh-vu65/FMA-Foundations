@@ -14,13 +14,14 @@ public class GameApplication
     public User User;
     public Dealer Dealer;
     public GameEngine GameEngine;
-    public GameApplication()
+    public GameApplication(User user, Dealer dealer, GameEngine gameEngine)
     {
-        
+        User = user;
+        Dealer = dealer;
+        GameEngine = gameEngine;
     }
-    
 
-    public void PrintStartupMessage()
+    public static void PrintStartupMessage()
     {
         Console.WriteLine("Welcome to the BlackJack Program");
         Console.WriteLine("In this program you will be playing BlackJack against the dealer");
@@ -31,5 +32,20 @@ public class GameApplication
         Console.WriteLine("The aim of the game is to add cards to your hand so that your cards get as close to 21 " +
                           "as possible, without going over");
         Console.WriteLine("The game will now begin loading... \n");
+    }
+
+    public void UserTurn()
+    {
+        GameEngine.DealInitialHand(User);
+    }
+
+    public void PrintHand(IPlayer player)
+    {
+        Console.Write($"{player}'s current hand is: ");
+        foreach (var card in player.Hand)
+        {
+            Console.Write(card + " ");
+        }
+        Console.WriteLine($"\n{player}'s current total is: {player.HandValue}");
     }
 }
