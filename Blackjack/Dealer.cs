@@ -11,9 +11,10 @@ public class Dealer : IPlayer
     {
         Hand = new List<Card>();
     }
-
-    public void ShouldDealerStay()
+    
+    public override string ToString()
     {
-        Stay = (HandValue > 17) ? true : false;
+        return "Dealer";
     }
+    
 }

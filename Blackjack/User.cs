@@ -12,4 +12,9 @@ public class User : IPlayer
     {
         Hand = new List<Card>();
     }
+    
+    public override string ToString()
+    {
+        return "User";
+    }
 }
