@@ -6,28 +6,10 @@ public class User : IPlayer
     public int HandValue { get; set; }
     public bool Stay { get; set; }
     public Deck Deck;
+    public bool Bust { get; set; }
     
-
-    public User(Deck deck)
+    public User()
     {
         Hand = new List<Card>();
-        Deck = deck;
     }
-    
-    public void Hit()
-    {
-        Deck.DrawFromDeck();
-        Hand.Add(Deck.NextCardToDraw);
-    }
-
-    public void PrintHand()
-    {
-        Console.Write("Your current hand is: ");
-        foreach (var card in Hand)
-        {
-            Console.Write(card + " ");
-        }
-        Console.WriteLine($"\n Your hand's current total is: {HandValue}");
-    }
-    
 }
