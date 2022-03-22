@@ -2,18 +2,24 @@ namespace BlackJack;
 
 public class GameEngine
 {
-    private readonly User _user;
+    public User User { get; }
+    public Dealer Dealer { get; }
     private readonly Deck _deck;
     public bool UserWins;
     public bool DealerWins;
     public bool GameTie;
 
-    public GameEngine(User user, Deck deck)
+    public GameEngine(User user, Dealer dealer, Deck deck)
     {
-        _user = user;
+        User = user;
+        Dealer = dealer;
         _deck = deck;
     }
     
+    // Ace counter to Hand property
+    // Deal intial hand method
+    // Calculate Initial hand value
+    // Add Card value and calculate
     public void CalculateHandValue(IPlayer player)
     {
         int value = 0;
@@ -63,7 +69,7 @@ public class GameEngine
 
         if (userChoice == 2)
         {
-            _user.Stay = true;
+            User.Stay = true;
         }
     }
 

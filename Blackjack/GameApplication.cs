@@ -2,14 +2,10 @@ namespace BlackJack;
 
 public class GameApplication
 {
-    private readonly User _user;
-    private readonly Dealer _dealer;
     private readonly GameEngine _gameEngine;
     
-    public GameApplication(User user, Dealer dealer, GameEngine gameEngine)
+    public GameApplication(GameEngine gameEngine)
     {
-        _user = user;
-        _dealer = dealer;
         _gameEngine = gameEngine;
     }
 
@@ -30,37 +26,37 @@ public class GameApplication
     {
         UserTurn();
         DealerTurn();
-        _gameEngine.DetermineWinner(_user, _dealer);
+        _gameEngine.DetermineWinner(_gameEngine.User, _gameEngine.Dealer);
         PrintWinnerMessage();
     }
 
     private void UserTurn()
     {
         // Deal 1 card to user pre-loop. Code in loop will deal again once, resulting in initial 2 cards in hand.
-        _gameEngine.DealToPlayer(_user);
+        _gameEngine.DealToPlayer(_gameEngine.User);
         do
         {
-            PlayerTurnLogic(_user);
-            if (_user.Bust)
+            PlayerTurnLogic(_gameEngine.User);
+            if (_gameEngine.User.Bust)
             {
                 return;
             }
             _gameEngine.HandleInput();
-        } while (!_user.Stay);
+        } while (!_gameEngine.User.Stay);
     }
 
     private void DealerTurn()
     {
         // Deal 1 card to dealer pre-loop. Code in loop will deal again once, resulting in initial 2 cards in hand.
-        _gameEngine.DealToPlayer(_dealer);
+        _gameEngine.DealToPlayer(_gameEngine.Dealer);
         do
         {
-            PlayerTurnLogic(_dealer);
-            if (_dealer.HandValue > 17)
+            PlayerTurnLogic(_gameEngine.Dealer);
+            if (_gameEngine.Dealer.HandValue > 17)
             {
-                _dealer.Stay = true;
+                _gameEngine.Dealer.Stay = true;
             }
-        } while (!_dealer.Stay);
+        } while (!_gameEngine.Dealer.Stay);
     }
 
     private void PlayerTurnLogic(IPlayer player)
