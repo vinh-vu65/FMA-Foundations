@@ -2,17 +2,16 @@ namespace BlackJack;
 
 public class GameEngine
 {
-    public User User;
-    public Deck Deck;
-    private bool inputValid = false;
-    public bool UserWins = false;
-    public bool DealerWins = false;
-    public bool GameTie = false;
+    private readonly User _user;
+    private readonly Deck _deck;
+    public bool UserWins;
+    public bool DealerWins;
+    public bool GameTie;
 
     public GameEngine(User user, Deck deck)
     {
-        User = user;
-        Deck = deck;
+        _user = user;
+        _deck = deck;
     }
     
     public void CalculateHandValue(IPlayer player)
@@ -38,14 +37,15 @@ public class GameEngine
     
     public void DealToPlayer(IPlayer player)
     {
-        Deck.DrawFromDeck();
-        player.Hand.Add(Deck.NextCardToDraw);
-        Console.WriteLine($"{player} has drawn {Deck.NextCardToDraw}");
+        _deck.DrawFromDeck();
+        player.Hand.Add(_deck.NextCardToDraw);
+        Console.WriteLine($"{player} has drawn {_deck.NextCardToDraw}");
     }
 
     public void HandleInput()
     {
         int userChoice;
+        bool inputValid = false;
         Console.WriteLine("Would you like to Hit or Stay? (Hit = 1, Stay = 2)");
         do
         {
@@ -63,7 +63,7 @@ public class GameEngine
 
         if (userChoice == 2)
         {
-            User.Stay = true;
+            _user.Stay = true;
         }
     }
 

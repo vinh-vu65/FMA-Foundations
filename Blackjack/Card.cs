@@ -2,8 +2,8 @@ namespace BlackJack;
 
 public class Card
 {
-    public Suit CardSuit { get; set; }
-    public Value CardValue { get; set; }
+    public Suit CardSuit { get; }
+    public Value CardValue { get; }
     
     public Card(Value value, Suit suit)
     {

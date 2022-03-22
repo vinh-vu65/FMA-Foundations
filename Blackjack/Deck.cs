@@ -3,8 +3,8 @@ namespace BlackJack;
 
 public class Deck
 {
-    public List<Card> PlayingDeck { get; set; }
-    public Card NextCardToDraw { get; set; }
+    private List<Card> PlayingDeck { get; set; }
+    public Card NextCardToDraw { get; private set; }
 
     public Deck()
     {
@@ -33,8 +33,7 @@ public class Deck
     {
         Console.WriteLine("Preparing to shuffle deck... \n");
         var rnd = new Random();
-        var shuffledDeck = PlayingDeck.OrderBy(item => rnd.Next());
-        PlayingDeck = shuffledDeck.ToList();
+        PlayingDeck = PlayingDeck.OrderBy(item => rnd.Next()).ToList();
         Console.WriteLine("Deck has been shuffled. \n");
     }
     

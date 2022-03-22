@@ -2,15 +2,15 @@ namespace BlackJack;
 
 public class GameApplication
 {
-    public User User;
-    public Dealer Dealer;
-    public GameEngine GameEngine;
+    private readonly User _user;
+    private readonly Dealer _dealer;
+    private readonly GameEngine _gameEngine;
     
     public GameApplication(User user, Dealer dealer, GameEngine gameEngine)
     {
-        User = user;
-        Dealer = dealer;
-        GameEngine = gameEngine;
+        _user = user;
+        _dealer = dealer;
+        _gameEngine = gameEngine;
     }
 
     public static void PrintStartupMessage()
@@ -30,45 +30,45 @@ public class GameApplication
     {
         UserTurn();
         DealerTurn();
-        GameEngine.DetermineWinner(User, Dealer);
+        _gameEngine.DetermineWinner(_user, _dealer);
         PrintWinnerMessage();
     }
-    
-    public void UserTurn()
+
+    private void UserTurn()
     {
         // Deal 1 card to user pre-loop. Code in loop will deal again once, resulting in initial 2 cards in hand.
-        GameEngine.DealToPlayer(User);
+        _gameEngine.DealToPlayer(_user);
         do
         {
-            PlayerTurnLogic(User);
-            if (User.Bust)
+            PlayerTurnLogic(_user);
+            if (_user.Bust)
             {
                 return;
             }
-            GameEngine.HandleInput();
-        } while (!User.Stay);
+            _gameEngine.HandleInput();
+        } while (!_user.Stay);
     }
 
-    public void DealerTurn()
+    private void DealerTurn()
     {
         // Deal 1 card to dealer pre-loop. Code in loop will deal again once, resulting in initial 2 cards in hand.
-        GameEngine.DealToPlayer(Dealer);
+        _gameEngine.DealToPlayer(_dealer);
         do
         {
-            PlayerTurnLogic(Dealer);
-            if (Dealer.HandValue > 17)
+            PlayerTurnLogic(_dealer);
+            if (_dealer.HandValue > 17)
             {
-                Dealer.Stay = true;
+                _dealer.Stay = true;
             }
-        } while (!Dealer.Stay);
+        } while (!_dealer.Stay);
     }
 
-    public void PlayerTurnLogic(IPlayer player)
+    private void PlayerTurnLogic(IPlayer player)
     {
-        GameEngine.DealToPlayer(player);
-        GameEngine.CalculateHandValue(player);
+        _gameEngine.DealToPlayer(player);
+        _gameEngine.CalculateHandValue(player);
         PrintHand(player);
-        GameEngine.CheckIfBust(player);
+        _gameEngine.CheckIfBust(player);
     }
 
     private void PrintHand(IPlayer player)
@@ -83,17 +83,17 @@ public class GameApplication
 
     private void PrintWinnerMessage()
     {
-        if (GameEngine.DealerWins)
+        if (_gameEngine.DealerWins)
         {
             Console.WriteLine("Dealer wins!");
         }
 
-        if (GameEngine.UserWins)
+        if (_gameEngine.UserWins)
         {
             Console.WriteLine("You beat the dealer!");
         }
 
-        if (GameEngine.GameTie)
+        if (_gameEngine.GameTie)
         {
             Console.WriteLine("The game has ended in a tie");
         }
