@@ -6,13 +6,17 @@ public class GameEngine
     // CalculateHandValue() -> Ace = 11, if hand > 21 and Hand.Contains(Ace), ace value = 1
     public User User;
     public Dealer Dealer;
-    private bool inputValid;
+    public Deck Deck;
+    private bool inputValid = false;
 
-    public GameEngine(User user)
+    public GameEngine(User user, Dealer dealer, Deck deck)
     {
         User = user;
+        Dealer = dealer;
+        Deck = deck;
     }
-
+        // Calculate initial hand
+        // Seperate value calculator and ace handling
     public void CalculateHandValue(IPlayer player)
     {
         int value = 0;
@@ -33,11 +37,10 @@ public class GameEngine
         }
         player.HandValue = value;
     }
-
-    /*
+    
     public void DealToPlayer(IPlayer player)
     {
-        Deck.DrawFromDeck();s
+        Deck.DrawFromDeck();
         player.Hand.Add(Deck.NextCardToDraw);
     }
 
@@ -47,8 +50,9 @@ public class GameEngine
         {
             DealToPlayer(player);
         }
+
+        Console.WriteLine($"{player} has been dealt two cards.");
     }
-    */
 
     public void HandleInput()
     {
@@ -71,6 +75,40 @@ public class GameEngine
         if (userChoice == 2)
         {
             User.Stay = true;
+        }
+    }
+
+    public void CheckIfBust(IPlayer player)
+    {
+        if (player.HandValue > 21)
+        {
+            player.Bust = true;
+        }
+    }
+    public void DetermineWinner(User user, Dealer dealer)
+    {
+        if (user.Bust && dealer.Bust)
+        {
+            tie
+        }
+
+        if (user.Bust && !dealer.Bust)
+        {
+            dealer wins
+        }
+
+        if (!user.Bust && dealer.Bust)
+        {
+            user wins
+        }
+
+        if ((21 - user.HandValue) < (21 - dealer.HandValue))
+        {
+            user wins
+        }
+        else
+        {
+            dealer wins
         }
     }
 }
