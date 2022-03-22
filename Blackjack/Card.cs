@@ -2,9 +2,6 @@ namespace BlackJack;
 
 public class Card
 {
-    // Card Value = number on card
-    // Card Face = Value + Suit
-    
     public Suit CardSuit { get; set; }
     public Value CardValue { get; set; }
     
@@ -13,10 +10,12 @@ public class Card
         CardValue = value;
         CardSuit = suit;
     }
+    
     public override string ToString()
     {
         return $"[{CardValue} , {CardSuit}]";
     }
+    
     public int GetValue()
     {
         int value = (int)CardValue;
@@ -26,6 +25,7 @@ public class Card
         }
         return value;
     }
+    
     public enum Suit
     {
         HEART,
@@ -33,6 +33,7 @@ public class Card
         CLUB,
         SPADE
     }
+    
     public enum Value
     {
         TWO = 2,
