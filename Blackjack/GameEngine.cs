@@ -64,31 +64,6 @@ public class GameEngine
         }
     }
 
-    public void HandleInput()
-    {
-        int userChoice;
-        bool inputValid = false;
-        Console.WriteLine("Would you like to Hit or Stay? (Hit = 1, Stay = 2)");
-        do
-        {
-            Int32.TryParse(Console.ReadLine(), out userChoice);
-            if (userChoice == 1 || userChoice == 2)
-            {
-                inputValid = true;
-            }
-            else
-            {
-                Console.WriteLine("Please enter 1 to hit or 2 to stay.");
-                Console.Write("Try again: ");
-            }
-        } while (!inputValid);
-
-        if (userChoice == 2)
-        {
-            User.Stay = true;
-        }
-    }
-
     public void CheckIfBust(IPlayer player)
     {
         if (player.HandValue > 21)

@@ -33,15 +33,15 @@ public class GameApplication
     private void UserTurn()
     {
         InitialTurnSetup(_gameEngine.User);         // Deals 2 cards, calculates value and prints hand                     
-        _gameEngine.HandleInput();                  // Prompts user if they would like to hit or stay      
+        PromptUserToHitOrStay();                      
         while (!_gameEngine.User.Stay)
         {
-            PlayerHitLogic(_gameEngine.User);       // Deals a single card, calculates value, handles value
-            if (_gameEngine.User.Bust)              // if Ace is present and prints new hand
+            PlayerHitLogic(_gameEngine.User);       // Deals a single card, calculates value, handles value if
+            if (_gameEngine.User.Bust)              // Ace is present, handle if bust and prints new hand
             {
                 return;
             }
-            _gameEngine.HandleInput();
+            PromptUserToHitOrStay();
         }
     }
 
@@ -70,6 +70,28 @@ public class GameApplication
         _gameEngine.CheckIfBust(player);
     }
 
+    private void PromptUserToHitOrStay()
+    {
+        int userChoice;
+        bool inputValid = false;
+        Console.WriteLine("Would you like to Hit or Stay? (Hit = 1, Stay = 2)");
+        do
+        {
+            Int32.TryParse(Console.ReadLine(), out userChoice);
+            if (userChoice == 1 || userChoice == 2)
+            {
+                inputValid = true;
+            }
+            else
+            {
+                Console.WriteLine("Please enter 1 to hit or 2 to stay.");
+                Console.Write("Try again: ");
+            }
+        } while (!inputValid);
+
+        _gameEngine.User.Stay = (userChoice == 2);
+    }
+    
     private void PrintHand(IPlayer player)
     {
         Console.Write($"{player}'s current hand is: ");
