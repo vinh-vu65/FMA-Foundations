@@ -1,23 +1,23 @@
 using System.Linq;
+
 namespace BlackJack;
 
 public class Deck
 {
     private List<Card> PlayingDeck { get; set; }
-    public Card NextCardToDraw { get; private set; }
 
     public Deck()
     {
         LoadCards();
         ShuffleDeck();
     }
-    
+
     private void LoadCards()
     {
         Console.WriteLine("Preparing to load deck... \n");
         PlayingDeck = new List<Card>();
-        var suits = Enum.GetValues<Card.Suit>();
-        var values = Enum.GetValues<Card.Value>();
+        var suits = Enum.GetValues<Suit>();
+        var values = Enum.GetValues<Value>();
         foreach (var suit in suits)
         {
             foreach (var value in values)
@@ -26,9 +26,10 @@ public class Deck
                 PlayingDeck.Add(cardToAdd);
             }
         }
+
         Console.WriteLine("Standard playing deck has finished loading. \n");
     }
-    
+
     private void ShuffleDeck()
     {
         Console.WriteLine("Preparing to shuffle deck... \n");
@@ -36,11 +37,12 @@ public class Deck
         PlayingDeck = PlayingDeck.OrderBy(item => rnd.Next()).ToList();
         Console.WriteLine("Deck has been shuffled. \n");
     }
-    
-    public void DrawFromDeck()
+
+    public Card DrawFromDeck()
     {
         var deckSize = PlayingDeck.Count;
-        NextCardToDraw = PlayingDeck[deckSize - 1];
-        PlayingDeck.Remove(NextCardToDraw);
+        var nextCard = PlayingDeck[deckSize - 1];
+        PlayingDeck.Remove(nextCard);
+        return nextCard;
     }
 }

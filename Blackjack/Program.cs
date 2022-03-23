@@ -10,7 +10,7 @@ public class Program
         var user = new User();
         var gameEngine = new GameEngine(user, dealer, deck);
         var gameApplication = new GameApplication(gameEngine);
-        
+
         gameApplication.Run();
     }
 }

@@ -3,7 +3,7 @@ namespace BlackJack;
 public class GameApplication
 {
     private readonly GameEngine _gameEngine;
-    
+
     public GameApplication(GameEngine gameEngine)
     {
         _gameEngine = gameEngine;
@@ -29,18 +29,19 @@ public class GameApplication
         _gameEngine.DetermineWinner(_gameEngine.User, _gameEngine.Dealer);
         PrintWinnerMessage();
     }
-    
+
     private void UserTurn()
     {
-        InitialTurnSetup(_gameEngine.User);         // Deals 2 cards, calculates value and prints hand                     
-        PromptUserToHitOrStay();                      
+        InitialTurnSetup(_gameEngine.User); // Deals 2 cards, calculates value and prints hand                     
+        PromptUserToHitOrStay();
         while (!_gameEngine.User.Stay)
         {
-            PlayerHitLogic(_gameEngine.User);       // Deals a single card, calculates value, handles value if
-            if (_gameEngine.User.Bust)              // Ace is present, handle if bust and prints new hand
+            PlayerHitLogic(_gameEngine.User); // Deals a single card, calculates value, handles value if
+            if (_gameEngine.User.Bust) // Ace is present, handle if bust and prints new hand
             {
                 return;
             }
+
             PromptUserToHitOrStay();
         }
     }
@@ -56,11 +57,11 @@ public class GameApplication
 
     private void InitialTurnSetup(IPlayer player)
     {
-        _gameEngine.DealInitialHand(player);              
-        _gameEngine.CalculateInitialHandValue(player);    
+        _gameEngine.DealInitialHand(player);
+        _gameEngine.CalculateInitialHandValue(player);
         PrintHand(player);
     }
-    
+
     private void PlayerHitLogic(IPlayer player)
     {
         _gameEngine.DealToPlayer(player);
@@ -91,7 +92,7 @@ public class GameApplication
 
         _gameEngine.User.Stay = (userChoice == 2);
     }
-    
+
     private void PrintHand(IPlayer player)
     {
         Console.Write($"{player}'s current hand is: ");
@@ -99,6 +100,7 @@ public class GameApplication
         {
             Console.Write(card + " ");
         }
+
         Console.WriteLine($"\n{player}'s current total is: {player.HandValue}");
     }
 

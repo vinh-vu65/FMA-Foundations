@@ -7,12 +7,13 @@ public class User : IPlayer
     public int AceCounter { get; set; }
     public bool Stay { get; set; }
     public bool Bust { get; set; }
-    
+    public bool BlackJack { get; set; }
+
     public User()
     {
         Hand = new List<Card>();
     }
-    
+
     public override string ToString()
     {
         return "User";

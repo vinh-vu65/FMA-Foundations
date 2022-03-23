@@ -10,46 +10,45 @@ namespace BlackJackTests;
 public class TestCardValue
 {
     [Theory]
-    [InlineData(Card.Value.KING)]
-    [InlineData(Card.Value.QUEEN)]
-    [InlineData(Card.Value.JACK)]
-    public void WhenCardValueIsGivenPictureThenValueEqualsTen(Card.Value value)
+    [InlineData(Value.KING)]
+    [InlineData(Value.QUEEN)]
+    [InlineData(Value.JACK)]
+    public void WhenCardValue_IsGivenPicture_ThenValueEqualsTen(Value value)
     {
         // Arrange:
-        var pictureCard = new Card(value, Card.Suit.SPADE);
+        var pictureCard = new Card(value, Suit.SPADE);
 
         // Act:
         var result = pictureCard.GetValue();
 
         //Assert:
         Assert.Equal(10, result);
-        
-        // When, Given, Then
     }
 
     [Fact]
-    public void WhenCardValueIsGivenAceThenValueEqualEleven()
+    public void WhenCardValue_IsGivenAce_ThenValueEqualEleven()
     {
         // Arrange:
-        var aceCard = new Card(Card.Value.ACE, Card.Suit.HEART);
-        
+        var aceCard = new Card(Value.ACE, Suit.HEART);
+
         // Act:
         var result = aceCard.GetValue();
-        
+
         // Assert:
         Assert.Equal(11, result);
     }
+
     [Fact]
-    public void WhenAceIsPresentInDeckAndHandValueIsGivenOverBustThenAceValueEqualsOne()
+    public void WhenAceIsPresentInDeck_AndHandValue_IsGivenOverBust_ThenAceValueEqualsOne()
     {
         // Arrange:
         var deck = new Deck();
         var player = new User();
         var dealer = new Dealer();
         player.Hand = new List<Card>();
-        player.Hand.Add(new Card(Card.Value.ACE, Card.Suit.CLUB));
-        player.Hand.Add(new Card(Card.Value.JACK, Card.Suit.SPADE));
-        player.Hand.Add(new Card(Card.Value.FIVE, Card.Suit.SPADE));
+        player.Hand.Add(new Card(Value.ACE, Suit.CLUB));
+        player.Hand.Add(new Card(Value.JACK, Suit.SPADE));
+        player.Hand.Add(new Card(Value.FIVE, Suit.SPADE));
 
         var engine = new GameEngine(player, dealer, deck);
 
@@ -66,7 +65,7 @@ public class TestCardValue
 public class TestGameWinnerLogic
 {
     [Fact]
-    public void WhenDealerHandIsGivenBustAndUserIsNotBustThenUserWins()
+    public void WhenDealerHand_IsGivenBustAndUserIsNotBust_ThenUserWins()
 
     {
         // Arrange: 
@@ -76,19 +75,19 @@ public class TestGameWinnerLogic
         user.HandValue = 20;
         var deck = new Deck();
         var engine = new GameEngine(user, dealer, deck);
-        
+
         // Act:
         engine.CheckIfBust(dealer);
         engine.CheckIfBust(user);
         engine.DetermineWinner(user, dealer);
         var result = engine.UserWins;
-        
+
         // Assert:
         Assert.True(result);
     }
-    
+
     [Fact]
-    public void WhenUserHandIsGivenBustAndDealerIsNotBustThenDealerWins()
+    public void WhenUserHand_IsGivenBustAndDealerIsNotBust_ThenDealerWins()
 
     {
         // Arrange: 
@@ -98,18 +97,19 @@ public class TestGameWinnerLogic
         user.HandValue = 22;
         var deck = new Deck();
         var engine = new GameEngine(user, dealer, deck);
-        
+
         // Act:
         engine.CheckIfBust(dealer);
         engine.CheckIfBust(user);
         engine.DetermineWinner(user, dealer);
         var result = engine.DealerWins;
-        
+
         // Assert:
         Assert.True(result);
     }
+
     [Fact]
-    public void WhenBothDealerAndUserBustThenGameIsATie()
+    public void WhenBothDealerAndUserBust_ThenGameIsATie()
 
     {
         // Arrange: 
@@ -119,19 +119,19 @@ public class TestGameWinnerLogic
         user.HandValue = 23;
         var deck = new Deck();
         var engine = new GameEngine(user, dealer, deck);
-        
+
         // Act:
         engine.CheckIfBust(dealer);
         engine.CheckIfBust(user);
         engine.DetermineWinner(user, dealer);
         var result = engine.GameTie;
-        
+
         // Assert:
         Assert.True(result);
     }
 
     [Fact]
-    public void WhenNeitherUserOrDealerBustButUserCloserTo21ThenUserWins()
+    public void WhenNeitherUserOrDealerBust_ButUserCloserTo21_ThenUserWins()
 
     {
         // Arrange: 
@@ -141,18 +141,19 @@ public class TestGameWinnerLogic
         user.HandValue = 20;
         var deck = new Deck();
         var engine = new GameEngine(user, dealer, deck);
-        
+
         // Act:
         engine.CheckIfBust(dealer);
         engine.CheckIfBust(user);
         engine.DetermineWinner(user, dealer);
         var result = engine.UserWins;
-        
+
         // Assert:
         Assert.True(result);
     }
+
     [Fact]
-    public void WhenNeitherUserOrDealerBustButDealerCloserTo21ThenDealerWins()
+    public void WhenNeitherUserOrDealerBust_ButDealerCloserTo21_ThenDealerWins()
 
     {
         // Arrange: 
@@ -162,19 +163,19 @@ public class TestGameWinnerLogic
         user.HandValue = 1;
         var deck = new Deck();
         var engine = new GameEngine(user, dealer, deck);
-        
+
         // Act:
         engine.CheckIfBust(dealer);
         engine.CheckIfBust(user);
         engine.DetermineWinner(user, dealer);
         var result = engine.DealerWins;
-        
+
         // Assert:
         Assert.True(result);
     }
-    
+
     [Fact]
-    public void WhenNeitherUserOrDealerBustButScoresAreEqualThenGameIsATie()
+    public void WhenNeitherUserOrDealerBust_ButScoresAreEqual_ThenGameIsATie()
 
     {
         // Arrange: 
@@ -184,13 +185,13 @@ public class TestGameWinnerLogic
         user.HandValue = 20;
         var deck = new Deck();
         var engine = new GameEngine(user, dealer, deck);
-        
+
         // Act:
         engine.CheckIfBust(dealer);
         engine.CheckIfBust(user);
         engine.DetermineWinner(user, dealer);
         var result = engine.GameTie;
-        
+
         // Assert:
         Assert.True(result);
     }
