@@ -15,28 +15,32 @@ public class GameEngine
         Dealer = dealer;
         _deck = deck;
     }
-    
+
     public void CalculateInitialHandValue(IPlayer player)
     {
         int value = 0;
         foreach (var card in player.Hand)
         {
             value += card.GetValue();
-            if (card.CardValue == Card.Value.ACE)
+            if (card.CardValue == Value.ACE)
             {
                 player.AceCounter++;
             }
         }
+
         player.HandValue = value;
     }
 
     public void CalculateValueAfterHit(IPlayer player)
     {
-        var drawnCardValue = _deck.NextCardToDraw.GetValue();
-        if (_deck.NextCardToDraw.CardValue == Card.Value.ACE)
+        var handSize = player.Hand.Count;
+        var drawnCard = player.Hand[handSize - 1];
+        var drawnCardValue = drawnCard.GetValue();
+        if (drawnCard.CardValue == Value.ACE)
         {
             player.AceCounter++;
         }
+
         player.HandValue += drawnCardValue;
     }
 
@@ -48,12 +52,12 @@ public class GameEngine
             player.HandValue -= 10;
         }
     }
-    
+
     public void DealToPlayer(IPlayer player)
     {
-        _deck.DrawFromDeck();
-        player.Hand.Add(_deck.NextCardToDraw);
-        Console.WriteLine($"{player} has drawn {_deck.NextCardToDraw}");
+        var nextCard = _deck.DrawFromDeck();
+        player.Hand.Add(nextCard);
+        Console.WriteLine($"{player} has drawn {nextCard}");
     }
 
     public void DealInitialHand(IPlayer player)
@@ -72,20 +76,32 @@ public class GameEngine
             Console.WriteLine($"{player} has bust.");
         }
     }
-    
+
+    public void CheckForBlackJack(IPlayer player)
+    {
+        if (player.HandValue == 21)
+        {
+            player.BlackJack = true;
+            Console.WriteLine($"{player} has BlackJack");
+        }
+    }
+
     public void DetermineWinner(User user, Dealer dealer)
     {
         bool neitherBust = !user.Bust && !dealer.Bust;
-        
-        if ((user.Bust && dealer.Bust) || ((neitherBust) && (21 - user.HandValue == 21 - dealer.HandValue)))
+
+        if ((user.Bust && dealer.Bust) || (neitherBust && (21 - user.HandValue == 21 - dealer.HandValue)) ||
+            user.BlackJack && dealer.BlackJack)
         {
             GameTie = true;
         }
-        else if ((user.Bust && !dealer.Bust) || ((neitherBust) && (21 - user.HandValue > 21 - dealer.HandValue)))
+        else if ((user.Bust && !dealer.Bust) || (neitherBust && (21 - user.HandValue > 21 - dealer.HandValue)) ||
+                 !user.BlackJack && dealer.BlackJack)
         {
             DealerWins = true;
         }
-        else if ((!user.Bust && dealer.Bust) || ((neitherBust) && (21 - user.HandValue < 21 - dealer.HandValue)))
+        else if ((!user.Bust && dealer.Bust) || (neitherBust && (21 - user.HandValue < 21 - dealer.HandValue)) ||
+                 user.BlackJack && !dealer.BlackJack)
         {
             UserWins = true;
         }

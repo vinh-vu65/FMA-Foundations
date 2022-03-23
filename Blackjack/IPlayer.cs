@@ -6,4 +6,5 @@ public interface IPlayer
     public int HandValue { get; set; }
     public int AceCounter { get; set; }
     public bool Bust { get; set; }
+    public bool BlackJack { get; set; }
 }

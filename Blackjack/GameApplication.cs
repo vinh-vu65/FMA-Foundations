@@ -37,7 +37,8 @@ public class GameApplication
         while (!_gameEngine.User.Stay)
         {
             PlayerHitLogic(_gameEngine.User); // Deals a single card, calculates value, handles value if
-            if (_gameEngine.User.Bust) // Ace is present, handle if bust and prints new hand
+            if (_gameEngine.User.Bust ||
+                _gameEngine.User.BlackJack) // Ace is present, handle if bust and prints new hand
             {
                 return;
             }
@@ -60,6 +61,7 @@ public class GameApplication
         _gameEngine.DealInitialHand(player);
         _gameEngine.CalculateInitialHandValue(player);
         PrintHand(player);
+        _gameEngine.CheckForBlackJack(player);
     }
 
     private void PlayerHitLogic(IPlayer player)
@@ -68,6 +70,7 @@ public class GameApplication
         _gameEngine.CalculateValueAfterHit(player);
         _gameEngine.HandleAceValue(player);
         PrintHand(player);
+        _gameEngine.CheckForBlackJack(player);
         _gameEngine.CheckIfBust(player);
     }
 
