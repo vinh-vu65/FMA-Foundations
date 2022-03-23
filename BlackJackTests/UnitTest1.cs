@@ -26,7 +26,7 @@ public class TestCardValue
         
         // When, Given, Then
     }
-    
+
     [Fact]
     public void WhenCardValueIsGivenAceThenValueEqualEleven()
     {
@@ -45,15 +45,17 @@ public class TestCardValue
         // Arrange:
         var deck = new Deck();
         var player = new User();
+        var dealer = new Dealer();
         player.Hand = new List<Card>();
         player.Hand.Add(new Card(Card.Value.ACE, Card.Suit.CLUB));
         player.Hand.Add(new Card(Card.Value.JACK, Card.Suit.SPADE));
         player.Hand.Add(new Card(Card.Value.FIVE, Card.Suit.SPADE));
 
-        var engine = new GameEngine(player, deck);
+        var engine = new GameEngine(player, dealer, deck);
 
         // Act:
-        engine.CalculateHandValue(player);
+        engine.CalculateInitialHandValue(player);
+        engine.HandleAceValue(player);
         var result = player.HandValue;
 
         // Assert:
@@ -65,7 +67,7 @@ public class TestGameWinnerLogic
 {
     [Fact]
     public void WhenDealerHandIsGivenBustAndUserIsNotBustThenUserWins()
-    
+
     {
         // Arrange: 
         var dealer = new Dealer();
@@ -73,7 +75,7 @@ public class TestGameWinnerLogic
         var user = new User();
         user.HandValue = 20;
         var deck = new Deck();
-        var engine = new GameEngine(user, deck);
+        var engine = new GameEngine(user, dealer, deck);
         
         // Act:
         engine.CheckIfBust(dealer);
@@ -95,7 +97,7 @@ public class TestGameWinnerLogic
         var user = new User();
         user.HandValue = 22;
         var deck = new Deck();
-        var engine = new GameEngine(user, deck);
+        var engine = new GameEngine(user, dealer, deck);
         
         // Act:
         engine.CheckIfBust(dealer);
@@ -116,7 +118,7 @@ public class TestGameWinnerLogic
         var user = new User();
         user.HandValue = 23;
         var deck = new Deck();
-        var engine = new GameEngine(user, deck);
+        var engine = new GameEngine(user, dealer, deck);
         
         // Act:
         engine.CheckIfBust(dealer);
@@ -138,7 +140,7 @@ public class TestGameWinnerLogic
         var user = new User();
         user.HandValue = 20;
         var deck = new Deck();
-        var engine = new GameEngine(user, deck);
+        var engine = new GameEngine(user, dealer, deck);
         
         // Act:
         engine.CheckIfBust(dealer);
@@ -159,13 +161,35 @@ public class TestGameWinnerLogic
         var user = new User();
         user.HandValue = 1;
         var deck = new Deck();
-        var engine = new GameEngine(user, deck);
+        var engine = new GameEngine(user, dealer, deck);
         
         // Act:
         engine.CheckIfBust(dealer);
         engine.CheckIfBust(user);
         engine.DetermineWinner(user, dealer);
         var result = engine.DealerWins;
+        
+        // Assert:
+        Assert.True(result);
+    }
+    
+    [Fact]
+    public void WhenNeitherUserOrDealerBustButScoresAreEqualThenGameIsATie()
+
+    {
+        // Arrange: 
+        var dealer = new Dealer();
+        dealer.HandValue = 20;
+        var user = new User();
+        user.HandValue = 20;
+        var deck = new Deck();
+        var engine = new GameEngine(user, dealer, deck);
+        
+        // Act:
+        engine.CheckIfBust(dealer);
+        engine.CheckIfBust(user);
+        engine.DetermineWinner(user, dealer);
+        var result = engine.GameTie;
         
         // Assert:
         Assert.True(result);
