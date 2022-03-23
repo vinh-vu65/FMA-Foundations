@@ -5,9 +5,9 @@ public class GameEngine
     public User User { get; }
     public Dealer Dealer { get; }
     private readonly Deck _deck;
-    public bool UserWins;
-    public bool DealerWins;
-    public bool GameTie;
+    public bool UserWins { get; private set; }
+    public bool DealerWins { get; private set; }
+    public bool GameTie { get; private set; }
 
     public GameEngine(User user, Dealer dealer, Deck deck)
     {
@@ -16,29 +16,37 @@ public class GameEngine
         _deck = deck;
     }
     
-    // Ace counter to Hand property
-    // Deal intial hand method
-    // Calculate Initial hand value
-    // Add Card value and calculate
-    public void CalculateHandValue(IPlayer player)
+    public void CalculateInitialHandValue(IPlayer player)
     {
         int value = 0;
-        int aceCounter = 0;
         foreach (var card in player.Hand)
         {
             value += card.GetValue();
             if (card.CardValue == Card.Value.ACE)
             {
-                aceCounter++;
+                player.AceCounter++;
             }
         }
-
-        while (value > 21 && aceCounter > 0)
-        {
-            value -= 10;
-            aceCounter--;
-        }
         player.HandValue = value;
+    }
+
+    public void CalculateValueAfterHit(IPlayer player)
+    {
+        var drawnCardValue = _deck.NextCardToDraw.GetValue();
+        if (_deck.NextCardToDraw.CardValue == Card.Value.ACE)
+        {
+            player.AceCounter++;
+        }
+        player.HandValue += drawnCardValue;
+    }
+
+    public void HandleAceValue(IPlayer player)
+    {
+        while (player.AceCounter > 0 && player.HandValue > 21)
+        {
+            player.AceCounter--;
+            player.HandValue -= 10;
+        }
     }
     
     public void DealToPlayer(IPlayer player)
@@ -46,6 +54,14 @@ public class GameEngine
         _deck.DrawFromDeck();
         player.Hand.Add(_deck.NextCardToDraw);
         Console.WriteLine($"{player} has drawn {_deck.NextCardToDraw}");
+    }
+
+    public void DealInitialHand(IPlayer player)
+    {
+        for (int i = 0; i < 2; i++)
+        {
+            DealToPlayer(player);
+        }
     }
 
     public void HandleInput()

@@ -29,40 +29,43 @@ public class GameApplication
         _gameEngine.DetermineWinner(_gameEngine.User, _gameEngine.Dealer);
         PrintWinnerMessage();
     }
-
+    
     private void UserTurn()
     {
-        // Deal 1 card to user pre-loop. Code in loop will deal again once, resulting in initial 2 cards in hand.
-        _gameEngine.DealToPlayer(_gameEngine.User);
-        do
+        InitialTurnSetup(_gameEngine.User);         // Deals 2 cards, calculates value and prints hand                     
+        _gameEngine.HandleInput();                  // Prompts user if they would like to hit or stay      
+        while (!_gameEngine.User.Stay)
         {
-            PlayerTurnLogic(_gameEngine.User);
-            if (_gameEngine.User.Bust)
+            PlayerHitLogic(_gameEngine.User);       // Deals a single card, calculates value, handles value
+            if (_gameEngine.User.Bust)              // if Ace is present and prints new hand
             {
                 return;
             }
             _gameEngine.HandleInput();
-        } while (!_gameEngine.User.Stay);
+        }
     }
 
     private void DealerTurn()
     {
-        // Deal 1 card to dealer pre-loop. Code in loop will deal again once, resulting in initial 2 cards in hand.
-        _gameEngine.DealToPlayer(_gameEngine.Dealer);
-        do
+        InitialTurnSetup(_gameEngine.Dealer);
+        while (_gameEngine.Dealer.HandValue < 17)
         {
-            PlayerTurnLogic(_gameEngine.Dealer);
-            if (_gameEngine.Dealer.HandValue > 17)
-            {
-                _gameEngine.Dealer.Stay = true;
-            }
-        } while (!_gameEngine.Dealer.Stay);
+            PlayerHitLogic(_gameEngine.Dealer);
+        }
     }
 
-    private void PlayerTurnLogic(IPlayer player)
+    private void InitialTurnSetup(IPlayer player)
+    {
+        _gameEngine.DealInitialHand(player);              
+        _gameEngine.CalculateInitialHandValue(player);    
+        PrintHand(player);
+    }
+    
+    private void PlayerHitLogic(IPlayer player)
     {
         _gameEngine.DealToPlayer(player);
-        _gameEngine.CalculateHandValue(player);
+        _gameEngine.CalculateValueAfterHit(player);
+        _gameEngine.HandleAceValue(player);
         PrintHand(player);
         _gameEngine.CheckIfBust(player);
     }
