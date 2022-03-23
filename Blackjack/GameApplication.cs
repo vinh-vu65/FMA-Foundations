@@ -32,13 +32,12 @@ public class GameApplication
 
     private void UserTurn()
     {
-        InitialTurnSetup(_gameEngine.User); // Deals 2 cards, calculates value and prints hand                     
+        InitialTurnSetup(_gameEngine.User);
         PromptUserToHitOrStay();
         while (!_gameEngine.User.Stay)
         {
-            PlayerHitLogic(_gameEngine.User); // Deals a single card, calculates value, handles value if
-            if (_gameEngine.User.Bust ||
-                _gameEngine.User.BlackJack) // Ace is present, handle if bust and prints new hand
+            PlayerHitLogic(_gameEngine.User);
+            if (_gameEngine.User.Bust || _gameEngine.User.BlackJack)
             {
                 return;
             }
