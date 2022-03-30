@@ -1,13 +1,15 @@
+using System.Threading.Channels;
 using TicTacToe.Models;
 
 namespace TicTacToe.View;
 
 public static class Printer
 {
+    
     public static void PrintWelcome()
     {
-        Console.WriteLine(Constants.WelcomeMessage);
-        Console.WriteLine(Constants.InitialBoardMessage);
+        Console.WriteLine(GameMessages.WelcomeMessage);
+        Console.WriteLine(GameMessages.InitialBoardMessage);
     }
 
     public static void PrintBoard(GameBoard gameboard)
@@ -21,5 +23,15 @@ public static class Printer
 
             Console.WriteLine();
         } 
+    }
+
+    public static void PrintPlayerTurn(IPlayer player)
+    {
+        Console.WriteLine($"{player}'s turn, enter a coord x,y to place your {player.BoardMarker} or enter 'q' to give up: ");
+    }
+
+    public static void PrintInvalidMove()
+    {
+        Console.WriteLine(GameMessages.InvalidMoveMessage);
     }
 }
