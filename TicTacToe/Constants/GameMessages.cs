@@ -9,6 +9,5 @@ public static class GameMessages
     public static string PlayerXWinMessage = "Player X has won the game!";
     public static string PlayerOWinMessage = "Player O has won the game!";
     public static string GameTieMessage = "The game has ended in a tie.";
-    public const int NumberOfRows = 3;
-    public const int NumberOfColumns = 3;
+    public const int DefaultNumberOfRows = 3;
 }
