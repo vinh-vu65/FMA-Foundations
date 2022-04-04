@@ -14,9 +14,9 @@ public static class Printer
 
     public static void PrintBoard(GameBoard gameboard)
     {
-        for (int i = 0; i < gameboard.BoardCoordinates.Count; i += gameboard.NumberOfColumns)
+        for (int i = 0; i < gameboard.BoardCoordinates.Count; i += gameboard.Size)
         {
-            for (int j = 0; j < gameboard.NumberOfColumns; j++)
+            for (int j = 0; j < gameboard.Size; j++)
             {
                 Console.Write($"{gameboard.BoardCoordinates[i+j].Value} ");
             }
