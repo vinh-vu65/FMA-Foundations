@@ -1,18 +1,36 @@
+using TicTacToe.Controller;
+using TicTacToe.View;
+
 namespace TicTacToe.Models;
 
 public class HumanPlayer : IPlayer
 {
-    public int MovesAccepted { get; set; }
-    public string BoardMarker { get; set; } = "X";
-    
+    public string BoardMarker { get; set; }
+    public InputHandler InputHandler { get; }
+    public GameBoard GameBoard { get; }
 
-    public void ChooseCoord()
+    public HumanPlayer(string boardMarker, GameBoard gameBoard, InputHandler inputHandler)
     {
-        throw new NotImplementedException();
+        BoardMarker = boardMarker;
+        GameBoard = gameBoard;
+        InputHandler = inputHandler;
+    }
+    
+    public string ChooseCoordinates()
+    {
+        string playerTurn;
+        bool isInputValid;
+        do
+        {
+            playerTurn = InputHandler.GetPlayerTurn();
+            isInputValid = InputHandler.ValidateTurn(playerTurn, GameBoard.Size);
+        } while (!isInputValid);
+
+        return playerTurn;
     }
 
     public override string ToString()
     {
-        return "Player X";
+        return $"Player {BoardMarker}";
     }
 }
