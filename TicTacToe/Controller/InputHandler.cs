@@ -6,9 +6,10 @@ namespace TicTacToe.Controller;
 
 public class InputHandler
 {
-    public string GetPlayerTurn()
+    public string ReadUserInput()
     {
         var output = Console.ReadLine();
+        output = output.Trim();
         return output;
     }
 
