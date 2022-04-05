@@ -6,14 +6,14 @@ namespace TicTacToe.Models;
 public class HumanPlayer : IPlayer
 {
     public string BoardMarker { get; set; }
-    public InputHandler InputHandler { get; }
-    public GameBoard GameBoard { get; }
+    private readonly InputHandler _inputHandler;
+    private readonly GameBoard _gameBoard;
 
     public HumanPlayer(string boardMarker, GameBoard gameBoard, InputHandler inputHandler)
     {
         BoardMarker = boardMarker;
-        GameBoard = gameBoard;
-        InputHandler = inputHandler;
+        _gameBoard = gameBoard;
+        _inputHandler = inputHandler;
     }
     
     public string ChooseCoordinates()
@@ -22,8 +22,8 @@ public class HumanPlayer : IPlayer
         bool isInputValid;
         do
         {
-            playerTurn = InputHandler.GetPlayerTurn();
-            isInputValid = InputHandler.ValidateTurn(playerTurn, GameBoard.Size);
+            playerTurn = _inputHandler.ReadUserInput();
+            isInputValid = _inputHandler.ValidateTurn(playerTurn, _gameBoard.Size);
         } while (!isInputValid);
 
         return playerTurn;
