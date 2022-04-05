@@ -5,7 +5,7 @@ public class GameBoard
     private const int MIN_NUMBER_OF_ROWS = 3;
     public int Size { get; }
     public List<Cell> BoardCoordinates { get; }
-    
+    public int MovesAccepted { get; set; }
 
     public GameBoard(int size)
     {
