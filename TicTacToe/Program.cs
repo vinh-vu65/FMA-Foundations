@@ -11,39 +11,19 @@ public static class Program
         var inputHandler = new InputHandler();
         Printer.PrintWelcome();
 
-        var gameBoard = new GameBoard(GameMessages.DefaultNumberOfRows);
+        var gameBoard = new GameBoard(GameMessages.DEFAULT_NUMBER_OF_ROWS);
         Printer.PrintBoard(gameBoard);
         var playerX = new HumanPlayer("X", gameBoard, inputHandler);
         var playerO = new HumanPlayer("O", gameBoard, inputHandler);
         var controller = new GameBoardController(gameBoard);
 
-        var flowController = new GameFlowController(controller, gameBoard);
+        var engine = new GameEngine(controller, gameBoard, playerX, playerO);
 
-        while (!flowController.Quit)
+        while (!engine.IsGameOver)
         {
-            flowController.PlayerTurn(playerX);
-        
-            Printer.PrintBoard(gameBoard);
-
-            if (flowController.IsBoardFullyUsed())
-            {
-                flowController.Quit = true;
-                return;
-            }
-
-            flowController.PlayerTurn(playerO);
-        
-            Printer.PrintBoard(gameBoard);
-            
-            if (flowController.IsBoardFullyUsed())
-            {
-                flowController.Quit = true;
-                return;
-            }
+            engine.RunGame();
         }
         
+        engine.PrintOutcome(engine.Winner);
     }
 }
-
-
-
