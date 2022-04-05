@@ -8,16 +8,43 @@ public class GameEngine
 {
     public GameBoardController BoardController { get; }
     public GameBoard GameBoard { get; }
-    public bool IsGameOver { get; set; }
-    private string _winner;
+    public HumanPlayer PlayerOne { get; }
+    public HumanPlayer PlayerTwo { get; }
+    public bool IsGameOver { get; private set; }
+    public string Winner { get; private set; }
 
-    public GameEngine(GameBoardController boardController, GameBoard gameBoard)
+    public GameEngine(GameBoardController boardController, GameBoard gameBoard, HumanPlayer playerOne, HumanPlayer playerTwo)
     {
         BoardController = boardController;
         GameBoard = gameBoard;
+        PlayerOne = playerOne;
+        PlayerTwo = playerTwo;
     }
 
-    public void PlayerTurn(IPlayer player)
+    public void RunGame()
+    {
+        PlayerTurn(PlayerOne);
+        if (GameBoard.MovesAccepted >= 2 * GameBoard.Size - 1) // Minimum number of moves before winner can be determined
+        {
+            DetermineWinner();
+            if (IsGameOver)
+            {
+                return;
+            }
+        }
+        if (IsGameTied()) 
+        {
+            IsGameOver = true;
+            return;
+        }
+        PlayerTurn(PlayerTwo);
+        if (GameBoard.MovesAccepted >= 2 * GameBoard.Size - 1)
+        {
+            DetermineWinner();
+        }
+    }
+
+    private void PlayerTurn(IPlayer player)
     {
         Printer.PrintPlayerTurn(player);
         var turnCoord = player.ChooseCoordinates();
@@ -29,14 +56,15 @@ public class GameEngine
 
         BoardController.UpdateBoard(turnCoord, player.BoardMarker);
         Printer.PrintAcceptedMove();
+        Printer.PrintBoard(GameBoard);
     }
 
-    public bool IsBoardFullyUsed()
+    private bool IsGameTied()
     {
         return (GameBoard.MovesAccepted == GameBoard.BoardCoordinates.Count);
     }
 
-    public void CheckRowsForWinner()
+    private void CheckRowsForWinner()
     {
         for (int i = 0; i < GameBoard.BoardCoordinates.Count; i += GameBoard.Size)
         {
@@ -53,13 +81,13 @@ public class GameEngine
 
             if (isWinningRow)
             {
-                _winner = firstValue;
+                Winner = firstValue;
                 return;
             }
         }
     }
 
-    public void CheckColumnsForWinner()
+    private void CheckColumnsForWinner()
     {
         for (int i = 0; i < GameBoard.Size; i++)
         {
@@ -76,14 +104,19 @@ public class GameEngine
 
             if (isWinningColumn)
             {
-                _winner = firstValue;
+                Winner = firstValue;
                 return;
             }
         }
     }
 
-    public void CheckDiagonalForWinner()
+    private void CheckDiagonalForWinner()
     {
+        // Following index of the coordinates:
+        // For a R to L diagonal win, follows pattern of multiples of GameBoard.Size - 1
+        
+        // For L to R diagonal win, follows pattern of multiples of GameBoard.Size + 1 (starting from zero)
+        
         var leftToRightDiagonal = GameBoard.BoardCoordinates[0].Value;
         var rightToLeftDiagonal = GameBoard.BoardCoordinates[GameBoard.Size - 1].Value;
         var isLeftToRightWinningDiagonal = true;
@@ -94,29 +127,47 @@ public class GameEngine
             if (rightToLeftDiagonal != GameBoard.BoardCoordinates[(i + 1) * (GameBoard.Size - 1)].Value)
             {
                 isRightToLeftWinningDiagonal = false;
+                break;
             }
 
             if (leftToRightDiagonal != GameBoard.BoardCoordinates[i * (GameBoard.Size + 1)].Value)
             {
                 isLeftToRightWinningDiagonal = false;
+                break;
             }
         }
 
         if (isLeftToRightWinningDiagonal)
         {
-            _winner = leftToRightDiagonal;
+            Winner = leftToRightDiagonal;
         }
 
         if (isRightToLeftWinningDiagonal)
         {
-            _winner = rightToLeftDiagonal;
+            Winner = rightToLeftDiagonal;
         }
     }
 
-    public void DetermineWinner()
+    private void DetermineWinner()
     {
         CheckColumnsForWinner();
         CheckRowsForWinner();
         CheckDiagonalForWinner();
+        if (Winner == PlayerTwo.BoardMarker || Winner == PlayerOne.BoardMarker)
+        {
+            IsGameOver = true;
+        }
+    }
+
+    public void PrintOutcome(string winner)
+    {
+        if (winner == PlayerTwo.BoardMarker || winner == PlayerOne.BoardMarker)
+        {
+            Printer.PrintWinner(winner);
+        }
+        else
+        {
+            Printer.PrintTieResult();
+        }
     }
 }
