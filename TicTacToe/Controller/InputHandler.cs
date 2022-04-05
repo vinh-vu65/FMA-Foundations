@@ -6,33 +6,46 @@ namespace TicTacToe.Controller;
 
 public class InputHandler
 {
-    public string PlayerTurn(int boardSize)
+    public string GetPlayerTurn()
     {
-        bool inputValid = false;
-        string input = "";
-        while (!inputValid)
-        {
-            try
-            {
-                input = Console.ReadLine();
-                CoordIsValid(input, boardSize);
-                inputValid = true;
-            }
-            catch(InvalidCoordinateException e)
-            {
-                Console.WriteLine(e.Message);
-            } 
-        }
-        return input;
+        var output = Console.ReadLine();
+        return output;
     }
 
-    private void CoordIsValid(string userInput, int boardSize)
+    public bool ValidateTurn(string userInput, int boardSize)
+    {
+        try
+        {
+            ValidateCoordinateValues(userInput, boardSize);
+            ValidateCoordinateFormat(userInput, boardSize);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+            return false;
+        }
+
+        return true;
+    }
+
+    private void ValidateCoordinateFormat(string userInput, int boardSize)
     {
         var pattern = $"^[1-{boardSize}],[1-{boardSize}]$";
         var regex = new Regex(pattern);
         if (!regex.IsMatch(userInput))
         {
-            throw new InvalidCoordinateException();
+            throw new InvalidCoordinateFormatException();
+        }
+    }
+
+    private void ValidateCoordinateValues(string userInput, int boardSize)
+    {
+        int firstValue, secondValue;
+        firstValue = int.Parse(userInput[0].ToString());
+        secondValue = int.Parse(userInput[^1].ToString());
+        if (firstValue < 1 || firstValue > boardSize || secondValue < 1 || secondValue > boardSize)
+        {
+            throw new OutOfBoundsException(boardSize);
         }
     }
 }
