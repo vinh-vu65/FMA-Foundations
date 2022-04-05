@@ -39,4 +39,14 @@ public static class Printer
     {
         Console.WriteLine(GameMessages.MoveAcceptedMessage);
     }
+
+    public static void PrintWinner(string winner)
+    {
+        Console.WriteLine($"Player {winner} has won the game!");
+    }
+
+    public static void PrintTieResult()
+    {
+        Console.WriteLine(GameMessages.GameTieMessage);
+    }
 }
