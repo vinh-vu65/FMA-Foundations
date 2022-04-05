@@ -6,13 +6,13 @@ namespace TicTacToe.View;
 public static class Printer
 {
     
-    public static void PrintWelcome()
+    public static void Welcome()
     {
         Console.WriteLine(GameMessages.WelcomeMessage);
         Console.WriteLine(GameMessages.InitialBoardMessage);
     }
 
-    public static void PrintBoard(GameBoard gameboard)
+    public static void GameBoard(GameBoard gameboard)
     {
         for (int i = 0; i < gameboard.BoardCoordinates.Count; i += gameboard.Size)
         {
@@ -25,27 +25,27 @@ public static class Printer
         } 
     }
 
-    public static void PrintPlayerTurn(IPlayer player)
+    public static void PlayerTurn(IPlayer player)
     {
         Console.WriteLine($"{player}'s turn, enter a coord x,y to place your {player.BoardMarker} or enter 'q' to give up: ");
     }
 
-    public static void PrintInvalidMove()
+    public static void InvalidMove()
     {
         Console.WriteLine(GameMessages.InvalidMoveMessage);
     }
 
-    public static void PrintAcceptedMove()
+    public static void AcceptedMove()
     {
         Console.WriteLine(GameMessages.MoveAcceptedMessage);
     }
 
-    public static void PrintWinner(string winner)
+    public static void Winner(string winner)
     {
         Console.WriteLine($"Player {winner} has won the game!");
     }
 
-    public static void PrintTieResult()
+    public static void TieResult()
     {
         Console.WriteLine(GameMessages.GameTieMessage);
     }
