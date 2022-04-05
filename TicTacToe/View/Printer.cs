@@ -34,4 +34,9 @@ public static class Printer
     {
         Console.WriteLine(GameMessages.InvalidMoveMessage);
     }
+
+    public static void PrintAcceptedMove()
+    {
+        Console.WriteLine(GameMessages.MoveAcceptedMessage);
+    }
 }
