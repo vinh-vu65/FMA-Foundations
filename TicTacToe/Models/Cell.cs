@@ -2,15 +2,14 @@ namespace TicTacToe.Models;
 
 public class Cell
 {
-    public int X { get; }
-    public int Y { get; }
+    private readonly int _x;
+    private readonly int _y;
     public string Value { get; set; }
     
-
     public Cell(int x, int y)
     {
-        X = x;
-        Y = y;
+        _x = x;
+        _y = y;
         Value = ".";
     }
 
@@ -21,6 +20,6 @@ public class Cell
 
     public override string ToString()
     {
-        return $"{X},{Y}";
+        return $"{_x},{_y}";
     }
 }
