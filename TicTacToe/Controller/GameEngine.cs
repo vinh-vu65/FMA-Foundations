@@ -4,14 +4,14 @@ using TicTacToe.View;
 
 namespace TicTacToe.Controller;
 
-public class GameFlowController
+public class GameEngine
 {
     public GameBoardController BoardController { get; }
     public GameBoard GameBoard { get; }
-    public bool Quit { get; set; }
+    public bool IsGameOver { get; set; }
     private string _winner;
 
-    public GameFlowController(GameBoardController boardController, GameBoard gameBoard)
+    public GameEngine(GameBoardController boardController, GameBoard gameBoard)
     {
         BoardController = boardController;
         GameBoard = gameBoard;
