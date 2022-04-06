@@ -11,19 +11,19 @@ public class GameBoard
     {
         Size = size;
         BoardCoordinates = new List<Cell>();
-        LoadInitialBoard();
+        LoadInitialBoard(Size);
     }
 
-    public void LoadInitialBoard()
+    private void LoadInitialBoard(int size)
     {
-        if (Size < MIN_NUMBER_OF_ROWS)
+        if (size < MIN_NUMBER_OF_ROWS)
         {
             throw new Exception();
         }
         
-        for (int i = 1; i <= Size; i++)
+        for (int i = 1; i <= size; i++)
         {
-            for (int j = 1; j <= Size; j++)
+            for (int j = 1; j <= size; j++)
             {
                 var coordinateToAdd = new Cell(j, i);
                 BoardCoordinates.Add(coordinateToAdd);
