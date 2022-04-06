@@ -46,11 +46,11 @@ public class WinChecker
     {
         for (int i = 0; i < _gameBoard.Size; i++)
         {
-            var firstValue = _gameBoard.BoardCoordinates[i].Value;
+            var markerToCheck = _gameBoard.BoardCoordinates[i].Value;
             var isWinningColumn = true;
             for (int j = _gameBoard.Size; j < _gameBoard.BoardCoordinates.Count; j += _gameBoard.Size)
             {
-                if (_gameBoard.BoardCoordinates[i + j].Value != firstValue)
+                if (_gameBoard.BoardCoordinates[i + j].Value != markerToCheck)
                 {
                     isWinningColumn = false;
                     break;
@@ -59,7 +59,7 @@ public class WinChecker
 
             if (isWinningColumn)
             {
-                Winner = firstValue;
+                Winner = markerToCheck;
                 return;
             }
         }
