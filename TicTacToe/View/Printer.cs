@@ -27,7 +27,7 @@ public static class Printer
 
     public static void PlayerTurn(IPlayer player)
     {
-        Console.WriteLine($"{player}'s turn, enter a coord x,y to place your {player.BoardMarker} or enter 'q' to give up: ");
+        Console.WriteLine($"{player}'s turn, enter a coord x,y to place your {player.BoardMarker}: ");
     }
 
     public static void InvalidMove()

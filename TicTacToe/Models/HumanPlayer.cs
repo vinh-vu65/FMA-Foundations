@@ -1,5 +1,4 @@
 using TicTacToe.Controller;
-using TicTacToe.View;
 
 namespace TicTacToe.Models;
 
