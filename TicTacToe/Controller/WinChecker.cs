@@ -23,11 +23,11 @@ public class WinChecker
     {
         for (int i = 0; i < _gameBoard.BoardCoordinates.Count; i += _gameBoard.Size)
         {
-            var firstValue = _gameBoard.BoardCoordinates[i].Value;
+            var markerToCheck = _gameBoard.BoardCoordinates[i].Value;
             var isWinningRow = true;
             for (int j = 1; j < _gameBoard.Size; j++)
             {
-                if (_gameBoard.BoardCoordinates[i + j].Value != firstValue)
+                if (_gameBoard.BoardCoordinates[i + j].Value != markerToCheck)
                 {
                     isWinningRow = false;
                     break;
@@ -36,7 +36,7 @@ public class WinChecker
 
             if (isWinningRow)
             {
-                Winner = firstValue;
+                Winner = markerToCheck;
                 return;
             }
         }
@@ -73,19 +73,19 @@ public class WinChecker
         * 
         *  For L to R diagonal win, follows pattern of multiples of GameBoard.Size + 1 (starting from zero)
         */
-        var leftToRightDiagonal = _gameBoard.BoardCoordinates[0].Value;
-        var rightToLeftDiagonal = _gameBoard.BoardCoordinates[_gameBoard.Size - 1].Value;
+        var topLeftCellMarker = _gameBoard.BoardCoordinates[0].Value;
+        var topRightCellMarker = _gameBoard.BoardCoordinates[_gameBoard.Size - 1].Value;
         var isLeftToRightWinningDiagonal = true;
         var isRightToLeftWinningDiagonal = true;
 
         for (int i = 1; i < _gameBoard.Size; i++)
         {
-            if (rightToLeftDiagonal != _gameBoard.BoardCoordinates[(i + 1) * (_gameBoard.Size - 1)].Value)
+            if (topRightCellMarker != _gameBoard.BoardCoordinates[(i + 1) * (_gameBoard.Size - 1)].Value)
             {
                 isRightToLeftWinningDiagonal = false;
             }
 
-            if (leftToRightDiagonal != _gameBoard.BoardCoordinates[i * (_gameBoard.Size + 1)].Value)
+            if (topLeftCellMarker != _gameBoard.BoardCoordinates[i * (_gameBoard.Size + 1)].Value)
             {
                 isLeftToRightWinningDiagonal = false;
             }
@@ -93,12 +93,12 @@ public class WinChecker
 
         if (isLeftToRightWinningDiagonal)
         {
-            Winner = leftToRightDiagonal;
+            Winner = topLeftCellMarker;
         }
 
         if (isRightToLeftWinningDiagonal)
         {
-            Winner = rightToLeftDiagonal;
+            Winner = topRightCellMarker;
         }
     }
 }
