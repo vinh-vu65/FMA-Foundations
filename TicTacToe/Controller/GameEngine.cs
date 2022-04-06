@@ -1,4 +1,3 @@
-using System.Threading.Channels;
 using TicTacToe.Models;
 using TicTacToe.View;
 
@@ -6,41 +5,44 @@ namespace TicTacToe.Controller;
 
 public class GameEngine
 {
-    public bool IsGameOver { get; private set; }
-    public string Winner { get; private set; }
+    private bool _isGameOver;
     private readonly GameBoardController _boardController;
     private readonly GameBoard _gameBoard;
     private readonly HumanPlayer _playerOne;
     private readonly HumanPlayer _playerTwo;
+    private readonly WinChecker _winChecker;
+    private readonly int _minimumMovesBeforeWin;
 
-    public GameEngine(GameBoardController boardController, GameBoard gameBoard, HumanPlayer playerOne, HumanPlayer playerTwo)
+    public GameEngine(GameBoardController boardController, GameBoard gameBoard, HumanPlayer playerOne, 
+        HumanPlayer playerTwo, WinChecker winChecker)
     {
         _boardController = boardController;
         _gameBoard = gameBoard;
         _playerOne = playerOne;
         _playerTwo = playerTwo;
+        _winChecker = winChecker;
+        _minimumMovesBeforeWin = 2 * _gameBoard.Size - 1;
     }
 
     public void RunGame()
     {
-        PlayerTurn(_playerOne);
-        if (_gameBoard.MovesAccepted >= 2 * _gameBoard.Size - 1) // Minimum number of moves before winner can be determined
+        while (!_isGameOver)
         {
-            DetermineWinner();
-            if (IsGameOver)
+            PlayerTurn(_playerOne);
+            if (_gameBoard.MovesAccepted >= _minimumMovesBeforeWin)
             {
-                return;
+                CheckIfGameOver();
+                if (_isGameOver)
+                {
+                    return;
+                }
             }
-        }
-        if (IsGameTied()) 
-        {
-            IsGameOver = true;
-            return;
-        }
-        PlayerTurn(_playerTwo);
-        if (_gameBoard.MovesAccepted >= 2 * _gameBoard.Size - 1)
-        {
-            DetermineWinner();
+
+            PlayerTurn(_playerTwo);
+            if (_gameBoard.MovesAccepted >= _minimumMovesBeforeWin)
+            {
+                CheckIfGameOver();
+            }
         }
     }
 
@@ -59,109 +61,23 @@ public class GameEngine
         Printer.GameBoard(_gameBoard);
     }
 
-    private bool IsGameTied()
+    private bool IsBoardFull()
     {
         return (_gameBoard.MovesAccepted == _gameBoard.BoardCoordinates.Count);
     }
-
-    private void CheckRowsForWinner()
+    
+    private void CheckIfGameOver()
     {
-        for (int i = 0; i < _gameBoard.BoardCoordinates.Count; i += _gameBoard.Size)
+        _winChecker.PerformWinCheck();
+        if (_winChecker.Winner == _playerOne.BoardMarker || _winChecker.Winner == _playerTwo.BoardMarker || IsBoardFull())
         {
-            var firstValue = _gameBoard.BoardCoordinates[i].Value;
-            var isWinningRow = true;
-            for (int j = 1; j < _gameBoard.Size; j++)
-            {
-                if (_gameBoard.BoardCoordinates[i + j].Value != firstValue)
-                {
-                    isWinningRow = false;
-                    break;
-                }
-            }
-
-            if (isWinningRow)
-            {
-                Winner = firstValue;
-                return;
-            }
-        }
-    }
-
-    private void CheckColumnsForWinner()
-    {
-        for (int i = 0; i < _gameBoard.Size; i++)
-        {
-            var firstValue = _gameBoard.BoardCoordinates[i].Value;
-            var isWinningColumn = true;
-            for (int j = _gameBoard.Size; j < _gameBoard.BoardCoordinates.Count; j += _gameBoard.Size)
-            {
-                if (_gameBoard.BoardCoordinates[i + j].Value != firstValue)
-                {
-                    isWinningColumn = false;
-                    break;
-                }
-            }
-
-            if (isWinningColumn)
-            {
-                Winner = firstValue;
-                return;
-            }
-        }
-    }
-
-    private void CheckDiagonalForWinner()
-    {
-        // Following index of the coordinates:
-        // For a R to L diagonal win, follows pattern of multiples of GameBoard.Size - 1
-        
-        // For L to R diagonal win, follows pattern of multiples of GameBoard.Size + 1 (starting from zero)
-        
-        var leftToRightDiagonal = _gameBoard.BoardCoordinates[0].Value;
-        var rightToLeftDiagonal = _gameBoard.BoardCoordinates[_gameBoard.Size - 1].Value;
-        var isLeftToRightWinningDiagonal = true;
-        var isRightToLeftWinningDiagonal = true;
-
-        for (int i = 1; i < _gameBoard.Size; i++)
-        {
-            if (rightToLeftDiagonal != _gameBoard.BoardCoordinates[(i + 1) * (_gameBoard.Size - 1)].Value)
-            {
-                isRightToLeftWinningDiagonal = false;
-                break;
-            }
-
-            if (leftToRightDiagonal != _gameBoard.BoardCoordinates[i * (_gameBoard.Size + 1)].Value)
-            {
-                isLeftToRightWinningDiagonal = false;
-                break;
-            }
-        }
-
-        if (isLeftToRightWinningDiagonal)
-        {
-            Winner = leftToRightDiagonal;
-        }
-
-        if (isRightToLeftWinningDiagonal)
-        {
-            Winner = rightToLeftDiagonal;
-        }
-    }
-
-    private void DetermineWinner()
-    {
-        CheckColumnsForWinner();
-        CheckRowsForWinner();
-        CheckDiagonalForWinner();
-        if (Winner == _playerTwo.BoardMarker || Winner == _playerOne.BoardMarker)
-        {
-            IsGameOver = true;
+            _isGameOver = true;
         }
     }
 
     public void PrintOutcome(string winner)
     {
-        if (winner == _playerTwo.BoardMarker || winner == _playerOne.BoardMarker)
+        if (winner == _playerOne.BoardMarker || winner == _playerTwo.BoardMarker)
         {
             Printer.Winner(winner);
         }

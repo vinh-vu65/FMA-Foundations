@@ -16,14 +16,12 @@ public static class Program
         var playerX = new HumanPlayer("X", gameBoard, inputHandler);
         var playerO = new HumanPlayer("O", gameBoard, inputHandler);
         var controller = new GameBoardController(gameBoard);
+        var winChecker = new WinChecker(gameBoard);
 
-        var engine = new GameEngine(controller, gameBoard, playerX, playerO);
-
-        while (!engine.IsGameOver)
-        {
-            engine.RunGame();
-        }
+        var engine = new GameEngine(controller, gameBoard, playerX, playerO, winChecker);
         
-        engine.PrintOutcome(engine.Winner);
+        engine.RunGame();
+
+        engine.PrintOutcome(winChecker.Winner);
     }
 }
