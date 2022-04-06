@@ -17,8 +17,8 @@ public class InputHandler
     {
         try
         {
+            ValidateCoordinateFormat(userInput);
             ValidateCoordinateValues(userInput, boardSize);
-            ValidateCoordinateFormat(userInput, boardSize);
         }
         catch (Exception e)
         {
@@ -29,9 +29,9 @@ public class InputHandler
         return true;
     }
 
-    private void ValidateCoordinateFormat(string userInput, int boardSize)
+    private void ValidateCoordinateFormat(string userInput)
     {
-        var pattern = $"^[1-{boardSize}],[1-{boardSize}]$";
+        var pattern = $"^([-\\d])+,([-\\d])+$";
         var regex = new Regex(pattern);
         if (!regex.IsMatch(userInput))
         {
@@ -41,10 +41,10 @@ public class InputHandler
 
     private void ValidateCoordinateValues(string userInput, int boardSize)
     {
-        int firstValue, secondValue;
-        firstValue = int.Parse(userInput[0].ToString());
-        secondValue = int.Parse(userInput[^1].ToString());
-        if (firstValue < 1 || firstValue > boardSize || secondValue < 1 || secondValue > boardSize)
+        var seperatedXY = userInput.Split(",");
+        var xValue = int.Parse(seperatedXY[0]);
+        var yValue = int.Parse(seperatedXY[1]);
+        if (xValue < 1 || xValue > boardSize || yValue < 1 || yValue > boardSize)
         {
             throw new OutOfBoundsException(boardSize);
         }
